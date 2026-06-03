@@ -8,7 +8,7 @@ export function h(path: string) {
 }
 
 export async function logoff() {
-  await fetch(h('/bof/api/user/logoff'), {
+  await fetch(h('/ledger/b2f/api/user/logoff'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ export async function c({
   method?: string
   body?: any
 }): Promise<CallResponseData> {
-  let response = await fetch(h('/bof/uim-call'), {
+  let response = await fetch(h('/ledger/b2f/call'), {
     method: 'POST',
     body: JSON.stringify({
       route: path,
