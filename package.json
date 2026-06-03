@@ -19,7 +19,9 @@
     "next": "16.2.7",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "yarn": "^1.22.22"
+    "yarn": "^1.22.22",
+    "yup": "^1.7.1",
+    "yup-locale-pt": "^0.0.9"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
