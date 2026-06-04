@@ -1,12 +1,17 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
+
+const basePath = '/ledger'
 
 const nextConfig: NextConfig = {
-  basePath: "/ledger",
+  basePath,
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
+  },
   experimental: {
     swcPlugins: [
-      ["fluentui-next-appdir-directive", { paths: ["@griffel", "@fluentui"] }],
+      ['fluentui-next-appdir-directive', { paths: ['@griffel', '@fluentui'] }],
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

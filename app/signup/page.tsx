@@ -63,6 +63,7 @@ export default function Home() {
       setWait(true)
       try {
         let status = await registerUser(values)
+        console.log('Register status response: ', status)
         if (status.success) {
           // Limpa formulário
           personFormik.resetForm()

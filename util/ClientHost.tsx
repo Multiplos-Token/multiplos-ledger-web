@@ -4,11 +4,12 @@ import { CallRequestBody, CallResponseData } from '@/util/Call'
 
 export function h(path: string) {
   const host = process?.env?.NEXT_PUBLIC_HOST_PATH || ''
-  return host + path
+  const basePath = process?.env?.NEXT_PUBLIC_BASE_PATH || ''
+  return host + basePath + path
 }
 
 export async function logoff() {
-  await fetch(h('/ledger/b2f/api/user/logoff'), {
+  await fetch(h('/b2f/api/user/logoff'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +28,7 @@ export async function c({
   method?: string
   body?: any
 }): Promise<CallResponseData> {
-  let response = await fetch(h('/ledger/b2f/call'), {
+  let response = await fetch(h('/b2f/call'), {
     method: 'POST',
     body: JSON.stringify({
       route: path,
