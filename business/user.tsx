@@ -45,7 +45,7 @@ export async function registerUser(
   let a = {} as RegisterUserStatusT
   try {
     const response = await c({
-      path: '/api/usermanager/register_user',
+      path: '/user-management/api/user/register',
       method: 'PUT',
       body: {
         name: userData.name,
@@ -72,30 +72,4 @@ export async function registerUser(
     a.message = `Erro desconhecido: ${e}. Tente novamente.`
   }
   return a
-}
-
-export async function listUsers(): Promise<Array<UserListDataT>> {
-  let res = [] as Array<UserListDataT>
-  try {
-    const response = await c({
-      path: '/api/usermanager/list_users?enrich=true',
-      method: 'POST',
-    })
-    res = (response.data ?? []) as Array<UserListDataT>
-  } catch (e) {}
-  return res
-}
-
-export async function listUsersByName(
-  name: string
-): Promise<Array<UserListDataT>> {
-  let res = [] as Array<UserListDataT>
-  try {
-    const response = await c({
-      path: `/api/usermanager/list_users/${name}?enrich=true`,
-      method: 'POST',
-    })
-    res = (response.data ?? []) as Array<UserListDataT>
-  } catch (e) {}
-  return res
 }

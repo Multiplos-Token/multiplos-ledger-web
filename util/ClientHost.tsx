@@ -3,8 +3,8 @@
 import { CallRequestBody, CallResponseData } from '@/util/Call'
 
 export function h(path: string) {
-  const host = process?.env?.NEXT_PUBLIC_HOST_PATH || ''
-  const basePath = process?.env?.NEXT_PUBLIC_BASE_PATH || ''
+  const host = process.env.NEXT_PUBLIC_HOST || ''
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
   return host + basePath + path
 }
 
