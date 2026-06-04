@@ -5,7 +5,7 @@ import * as Yup from 'yup'
 import { ptForm } from 'yup-locale-pt'
 import { useFormik } from 'formik'
 
-import { Input, Select } from '@fluentui/react-components'
+import { Input, Select, Button, Spinner } from '@fluentui/react-components'
 
 import { isPasswordStrong } from '@/util/Password'
 import {
@@ -53,9 +53,10 @@ export default function Home() {
       legalIdentification: '',
       countryIso2: 'br',
       title: '',
-      documentType: 'p',
+      documentType: 'pass',
     },
     onSubmit: async (values) => {
+      console.log('Handling submit...')
       setWait(true)
       try {
         let status = await registerUser(values)
@@ -338,83 +339,202 @@ export default function Home() {
   const documents =
     personFormik.values.countryIso2 === 'br' ? brazilDocuments : othersDocuments
 
+  console.log(personFormik.errors)
+  console.log(personFormik.values)
+
   return (
     <div className="h-dvh w-dvw overflow-auto">
-      <div className="flex flex-col items-center justify-center gap-6 mt-8 mb-8">
+      <form
+        className="flex flex-col items-center justify-center gap-6 mt-8 mb-8"
+        onSubmit={personFormik.handleSubmit}
+      >
         <div className="text-3xl">Cadastro:</div>
         <div className="w-4/5 flex flex-row items-center gap-3">
           <div className="w-1/3">Nome de Usuário:</div>
           <div className="grow min-w-0">
-            <Input id="userName" name="userName" className="w-full min-w-0" />
-          </div>
-        </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
-          <div className="w-1/3">Senha:</div>
-          <div className="grow min-w-0">
-            <Input id="" name="" className="w-full min-w-0" />
-          </div>
-        </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
-          <div className="w-1/3">Confirmação de Senha:</div>
-          <div className="grow min-w-0">
-            <Input id="" name="" className="w-full min-w-0" />
-          </div>
-        </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
-          <div className="w-1/3">Primeiro Nome:</div>
-          <div className="grow min-w-0">
-            <Input id="" name="" className="w-full min-w-0" />
-          </div>
-        </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
-          <div className="w-1/3">Último Nome (sobrenome):</div>
-          <div className="grow min-w-0">
-            <Input id="" name="" className="w-full min-w-0" />
-          </div>
-        </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
-          <div className="w-1/3">Nome Completo:</div>
-          <div className="grow min-w-0">
-            <Input id="" name="" className="w-full min-w-0" />
+            <Input
+              className="w-full min-w-0"
+              id="name"
+              name="name"
+              type="text"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.name}
+              disabled={wait}
+            />
           </div>
         </div>
         <div className="w-4/5 flex flex-row items-center gap-3">
           <div className="w-1/3">E-mail:</div>
           <div className="grow min-w-0">
-            <Input id="" name="" className="w-full min-w-0" />
+            <Input
+              className="w-full min-w-0"
+              id="email"
+              name="email"
+              type="text"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.email}
+              disabled={wait}
+            />
+          </div>
+        </div>
+        <div className="w-4/5 flex flex-row items-center gap-3">
+          <div className="w-1/3">Senha:</div>
+          <div className="grow min-w-0">
+            <Input
+              className="w-full min-w-0"
+              id="password"
+              name="password"
+              type="password"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.password}
+              disabled={wait}
+            />
+          </div>
+        </div>
+        <div className="w-4/5 flex flex-row items-center gap-3">
+          <div className="w-1/3">Confirmação de Senha:</div>
+          <div className="grow min-w-0">
+            <Input
+              className="w-full min-w-0"
+              id="passwordRepeat"
+              name="passwordRepeat"
+              type="password"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.passwordRepeat}
+              disabled={wait}
+            />
+          </div>
+        </div>
+        <div className="w-4/5 flex flex-row items-center gap-3">
+          <div className="w-1/3">Primeiro Nome:</div>
+          <div className="grow min-w-0">
+            <Input
+              className="w-full min-w-0"
+              id="firstName"
+              name="firstName"
+              type="text"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.firstName}
+              disabled={wait}
+            />
+          </div>
+        </div>
+        <div className="w-4/5 flex flex-row items-center gap-3">
+          <div className="w-1/3">Último Nome (sobrenome):</div>
+          <div className="grow min-w-0">
+            <Input
+              className="w-full min-w-0"
+              id="lastName"
+              name="lastName"
+              type="text"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.lastName}
+              disabled={wait}
+            />
+          </div>
+        </div>
+        <div className="w-4/5 flex flex-row items-center gap-3">
+          <div className="w-1/3">Nome Completo:</div>
+          <div className="grow min-w-0">
+            <Input
+              className="w-full min-w-0"
+              id="completeName"
+              name="completeName"
+              type="text"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.completeName}
+              disabled={wait}
+            />
           </div>
         </div>
         <div className="w-4/5 flex flex-row items-center gap-3">
           <div className="w-1/3">Número de Telefone:</div>
           <div className="grow min-w-0">
-            <Input id="" name="" className="w-full min-w-0" />
+            <Input
+              className="w-full min-w-0"
+              id="phoneNumber"
+              name="phoneNumber"
+              type="text"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.phoneNumber}
+              disabled={wait}
+            />
           </div>
         </div>
         <div className="w-4/5 flex flex-row items-center gap-3">
-          <div className="w-1/3">Identificação Legal (documento):</div>
+          <div className="w-1/3">Identificação Legal:</div>
           <div className="flex grow gap-2 min-w-0">
-            <Select>{documents}</Select>
-            <Input id="" name="" className="w-full min-w-0" />
+            <Select
+              id="documentType"
+              name="documentType"
+              disabled={wait}
+              value={personFormik.values.documentType}
+              onChange={personFormik.handleChange}
+            >
+              {documents}
+            </Select>
+            <Input
+              className="w-full min-w-0"
+              id="legalIdentification"
+              name="legalIdentification"
+              type="text"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.legalIdentification}
+              disabled={wait}
+            />
           </div>
         </div>
         <div className="w-4/5 flex flex-row items-center gap-3">
           <div className="w-1/3">País:</div>
           <div className="grow min-w-0">
-            <Select className="min-w-0">{countries}</Select>
+            <Select
+              className="min-w-0"
+              id="countryIso2"
+              name="countryIso2"
+              onChange={(ev) => {
+                if (personFormik.values.countryIso2 !== 'br') {
+                  personFormik.setFieldValue('documentType', 'pass')
+                }
+                personFormik.handleChange(ev)
+              }}
+              value={personFormik.values.countryIso2}
+              disabled={wait}
+            >
+              {countries}
+            </Select>
           </div>
         </div>
         <div className="w-4/5 flex flex-row items-center gap-3">
           <div className="w-1/3">Título de Tratamento:</div>
           <div className="grow min-w-0">
-            <Select>
+            <Select
+              className="min-w-0"
+              id="title"
+              name="title"
+              onChange={personFormik.handleChange}
+              value={personFormik.values.title}
+              disabled={wait}
+            >
               <option value=""></option>
-              <option value="">Sr.</option>
-              <option value="">Sra.</option>
-              <option value="">Srta.</option>
+              <option value="Sr.">Sr.</option>
+              <option value="Sra.">Sra.</option>
+              <option value="Srta.">Srta.</option>
+              <option value="D.">D.</option>
             </Select>
           </div>
         </div>
-      </div>
+        <div className="flex-1" />
+        <div className="flex flex-row-reverse w-full p-2 sm:w-2/3">
+          <Button type="submit" appearance="primary" disabled={wait}>
+            Registrar {wait && <Spinner />}
+          </Button>
+          <div className="mr-4">
+            <Button onClick={() => history.back()} disabled={wait}>
+              Cancelar
+            </Button>
+          </div>
+        </div>
+      </form>
     </div>
   )
 }
