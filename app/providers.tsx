@@ -1,36 +1,35 @@
-"use client";
+'use client'
 
-import * as React from "react";
+import * as React from 'react'
 import {
   FluentProvider,
-  teamsDarkTheme,
+  teamsLightTheme,
   SSRProvider,
   RendererProvider,
   createDOMRenderer,
   renderToStyleElements,
-} from "@fluentui/react-components";
-import { useServerInsertedHTML } from "next/navigation";
+} from '@fluentui/react-components'
+import { useServerInsertedHTML } from 'next/navigation'
 
 import { AntdRegistry } from '@ant-design/nextjs-registry'
 import { ConfigProvider } from 'antd'
 
-
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [renderer] = React.useState(() => createDOMRenderer());
-  const didRenderRef = React.useRef(false);
+  const [renderer] = React.useState(() => createDOMRenderer())
+  const didRenderRef = React.useRef(false)
 
   useServerInsertedHTML(() => {
     if (didRenderRef.current) {
-      return;
+      return
     }
-    didRenderRef.current = true;
-    return <>{renderToStyleElements(renderer)}</>;
-  });
+    didRenderRef.current = true
+    return <>{renderToStyleElements(renderer)}</>
+  })
 
   return (
     <RendererProvider renderer={renderer}>
       <SSRProvider>
-        <FluentProvider theme={teamsDarkTheme}>
+        <FluentProvider theme={teamsLightTheme}>
           <AntdRegistry>
             <ConfigProvider
               theme={{
@@ -47,5 +46,5 @@ export function Providers({ children }: { children: React.ReactNode }) {
         </FluentProvider>
       </SSRProvider>
     </RendererProvider>
-  );
+  )
 }
