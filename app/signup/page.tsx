@@ -33,9 +33,10 @@ const personValidationSchema = Yup.object({
   phoneNumber: Yup.string()
     .matches(
       /\+\d{1,3} \d{5,12}/,
-      'O formato do telefone é +0[00] 00000[00000]'
+      'O formato do telefone é +0[00] 00000[00000]. Coloque o código do país e então, o número com DDD.'
     )
     .required(),
+  legalIdentification: Yup.string().required(),
 })
 
 export default function Home() {
@@ -345,11 +346,11 @@ export default function Home() {
   return (
     <div className="h-dvh w-dvw overflow-auto">
       <form
-        className="flex flex-col items-center justify-center gap-6 mt-8 mb-8"
+        className="flex flex-col items-center justify-center mt-8 mb-8"
         onSubmit={personFormik.handleSubmit}
       >
         <div className="text-3xl">Cadastro:</div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Nome de Usuário:</div>
           <div className="grow min-w-0">
             <Input
@@ -363,7 +364,12 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.name && personFormik.errors.name ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.name}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">E-mail:</div>
           <div className="grow min-w-0">
             <Input
@@ -377,7 +383,12 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.email && personFormik.errors.email ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.email}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Senha:</div>
           <div className="grow min-w-0">
             <Input
@@ -391,7 +402,12 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.password && personFormik.errors.password ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.password}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Confirmação de Senha:</div>
           <div className="grow min-w-0">
             <Input
@@ -405,7 +421,13 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.passwordRepeat &&
+        personFormik.errors.passwordRepeat ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.passwordRepeat}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Primeiro Nome:</div>
           <div className="grow min-w-0">
             <Input
@@ -419,7 +441,12 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.firstName && personFormik.errors.firstName ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.firstName}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Último Nome (sobrenome):</div>
           <div className="grow min-w-0">
             <Input
@@ -433,7 +460,12 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.lastName && personFormik.errors.lastName ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.lastName}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Nome Completo:</div>
           <div className="grow min-w-0">
             <Input
@@ -447,7 +479,13 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.completeName &&
+        personFormik.errors.completeName ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.completeName}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Número de Telefone:</div>
           <div className="grow min-w-0">
             <Input
@@ -461,7 +499,12 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.phoneNumber && personFormik.errors.phoneNumber ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.phoneNumber}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Identificação Legal:</div>
           <div className="flex grow gap-2 min-w-0">
             <Select
@@ -484,7 +527,13 @@ export default function Home() {
             />
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.legalIdentification &&
+        personFormik.errors.legalIdentification ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.legalIdentification}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">País:</div>
           <div className="grow min-w-0">
             <Select
@@ -504,7 +553,12 @@ export default function Home() {
             </Select>
           </div>
         </div>
-        <div className="w-4/5 flex flex-row items-center gap-3">
+        {personFormik.touched.countryIso2 && personFormik.errors.countryIso2 ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.countryIso2}
+          </div>
+        ) : null}
+        <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Título de Tratamento:</div>
           <div className="grow min-w-0">
             <Select
@@ -523,8 +577,13 @@ export default function Home() {
             </Select>
           </div>
         </div>
+        {personFormik.touched.title && personFormik.errors.title ? (
+          <div className="w-4/5 text-red-500 text-bold">
+            {personFormik.errors.title}
+          </div>
+        ) : null}
         <div className="flex-1" />
-        <div className="flex flex-row-reverse w-full p-2 sm:w-2/3">
+        <div className="flex flex-row-reverse w-full p-2 sm:w-2/3 mt-4">
           <Button type="submit" appearance="primary" disabled={wait}>
             Registrar {wait && <Spinner />}
           </Button>
