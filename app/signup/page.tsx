@@ -4,8 +4,8 @@ import { useState } from 'react'
 import * as Yup from 'yup'
 import { ptForm } from 'yup-locale-pt'
 import { useFormik } from 'formik'
-
 import { Input, Select, Button, Spinner } from '@fluentui/react-components'
+import Link from 'next/link'
 
 import { isPasswordStrong } from '@/util/Password'
 import {
@@ -41,6 +41,8 @@ const personValidationSchema = Yup.object({
 
 export default function Home() {
   const [wait, setWait] = useState(false)
+  const [serverErrorMessage, setServerErrorMessage] = useState('')
+  const [submissionSuccess, setSubmissionSuccess] = useState(false)
   const personFormik = useFormik({
     initialValues: {
       name: '',
@@ -64,6 +66,7 @@ export default function Home() {
         if (status.success) {
           // Limpa formulário
           personFormik.resetForm()
+          setSubmissionSuccess(true)
 
           // TODO: Show message with success
         } else {
@@ -343,6 +346,23 @@ export default function Home() {
   console.log(personFormik.errors)
   console.log(personFormik.values)
 
+  if (submissionSuccess) {
+    return (
+      <div className="h-dvh w-dvw overflow-auto">
+        <div className="flex flex-col items-center justify-center min-h-full">
+          <p>Parabéns, {personFormik.values.name}, seu usuário foi criado.</p>
+          <p>
+            Você pode entrar no BToken Ledger{' '}
+            <b>
+              <Link href="/login">aqui</Link>
+            </b>
+            !
+          </p>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="h-dvh w-dvw overflow-auto">
       <form
@@ -350,6 +370,12 @@ export default function Home() {
         onSubmit={personFormik.handleSubmit}
       >
         <div className="text-3xl">Cadastro:</div>
+        {serverErrorMessage !== '' ? (
+          <div className="w-4/5 flex flex-col items-center justify-center text-bold text-lg text-red-500 mt-4">
+            <p>Não foi possível submeter cadastro.</p>
+            <p>{serverErrorMessage}</p>
+          </div>
+        ) : null}
         <div className="w-4/5 flex flex-row items-center gap-3 mt-4">
           <div className="w-1/3">Nome de Usuário:</div>
           <div className="grow min-w-0">
