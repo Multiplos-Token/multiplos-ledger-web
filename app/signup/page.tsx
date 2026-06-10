@@ -414,8 +414,9 @@ export default function Home() {
   } else {
     return (
       <div className="flex flex-col h-dvh w-dvw overflow-auto">
+        <div className="grow" />
         <form
-          className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit h-full w-dvw"
+          className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit w-dvw"
           onSubmit={personFormik.handleSubmit}
         >
           <div className="text-3xl">Cadastro:</div>
@@ -670,6 +671,7 @@ export default function Home() {
             </div>
           </div>
         </form>
+        <div className="grow" />
       </div>
     )
   }
