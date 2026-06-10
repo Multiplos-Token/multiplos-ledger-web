@@ -366,6 +366,7 @@ export default function Home() {
             <form
               onSubmit={async (evt) => {
                 evt.preventDefault()
+                setWait(true)
                 let res = await confirmRegistration(submittedEmail, submitCode)
                 console.log('Response for user registration submission: ', res)
               }}
@@ -377,6 +378,8 @@ export default function Home() {
                 type="text"
                 value={submitCode}
                 onChange={(evt) => setSubmitCode(evt.target.value)}
+                disabled={wait}
+                maxLength={10}
               />
               <div className="flex flex-row-reverse w-full p-2 sm:w-2/3 mt-4">
                 <Button type="submit" appearance="primary" disabled={wait}>
@@ -413,7 +416,6 @@ export default function Home() {
                 onChange={personFormik.handleChange}
                 value={personFormik.values.name}
                 disabled={wait}
-                maxLength={10}
               />
             </div>
           </div>

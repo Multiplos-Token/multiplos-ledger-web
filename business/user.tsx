@@ -91,7 +91,6 @@ export async function confirmRegistration(
 ): Promise<RegisterUserStatusT> {
   let a = {} as RegisterUserStatusT
   try {
-    console.log(code)
     const response = await c({
       path: '/financial-management/api/financial/user/confirm_registration',
       method: 'PUT',
