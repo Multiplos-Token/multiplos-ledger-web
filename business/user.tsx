@@ -60,16 +60,57 @@ export async function registerUser(
         legal_identification: `${userData.documentType}:${userData.legalIdentification}`,
       },
     })
+
     a.success = response.status < 300
+
     if (a.success) {
-      a.message = 'Usuário registrado com sucesso.'
+      // TODO: Change treatment here - only first leg of registration has been done!!!!
+      a.message = 'Primeira etapa de registro de usuário finalizada.'
     } else {
-      a.message =
-        'Usuário não pôde ser registrado. Verifique se ele já não foi registrado previamente e tente novamente.'
+      a.message = 'Usuário não pôde ser registrado. Tente novamente.'
+    }
+
+    try {
+      if (
+        response.data.registration_id &&
+        response.data.registration_id != ''
+      ) {
+        console.log('Debug registration id:', response.data.registration_id)
+      }
+    } catch {}
+  } catch (e) {
+    a.success = false
+    a.message = `Erro: ${e}. Tente novamente.`
+  }
+  return a
+}
+
+export async function confirmRegistration(
+  email: string,
+  code: string
+): Promise<RegisterUserStatusT> {
+  let a = {} as RegisterUserStatusT
+  try {
+    console.log(code)
+    const response = await c({
+      path: '/financial-management/api/financial/user/confirm_registration',
+      method: 'PUT',
+      body: {
+        email: email,
+        code: code,
+      },
+    })
+
+    a.success = response.status < 300
+
+    if (a.success) {
+      a.message = 'Usuário registrado com sucesso'
+    } else {
+      a.message = `Erro: ${response.data.error}`
     }
   } catch (e) {
     a.success = false
-    a.message = `Erro desconhecido: ${e}. Tente novamente.`
+    a.message = `Erro: ${e}. Tente novamente.`
   }
   return a
 }

@@ -12,6 +12,7 @@ import {
   registerUser,
   RegisterUserStatusT,
   UserListDataT,
+  confirmRegistration,
 } from '@/business/user'
 
 Yup.setLocale(ptForm)
@@ -43,6 +44,9 @@ export default function Home() {
   const [wait, setWait] = useState(false)
   const [serverErrorMessage, setServerErrorMessage] = useState('')
   const [submissionSuccess, setSubmissionSuccess] = useState(false)
+  const [submittedUserName, setSubmittedUserName] = useState('')
+  const [submitCode, setSubmitCode] = useState('')
+  const [submittedEmail, setSubmittedEmail] = useState('')
   const personFormik = useFormik({
     initialValues: {
       name: '',
@@ -65,6 +69,9 @@ export default function Home() {
         let status = await registerUser(values)
         console.log('Register status response: ', status)
         if (status.success) {
+          setSubmittedUserName(values.name)
+          setSubmittedEmail(values.email)
+
           // Limpa formulário
           personFormik.resetForm()
           setSubmissionSuccess(true)
@@ -344,21 +351,40 @@ export default function Home() {
   const documents =
     personFormik.values.countryIso2 === 'br' ? brazilDocuments : othersDocuments
 
-  console.log(personFormik.errors)
-  console.log(personFormik.values)
-
   if (submissionSuccess) {
     return (
       <div className="h-dvh w-dvw overflow-auto">
         <div className="flex flex-col items-center justify-center min-h-full">
-          <p>Parabéns, {personFormik.values.name}, seu usuário foi criado.</p>
-          <p>
-            Você pode entrar no BToken Ledger{' '}
-            <b>
-              <Link href="/login">aqui</Link>
-            </b>
-            !
-          </p>
+          <div className="flex flex-col items-center justify-center">
+            <div>
+              Caro(a), <b>{submittedUserName}</b>, verifique o seu e-mail.
+            </div>
+            <div>Lá deve ter uma mensagem do seu processo de registro.</div>
+          </div>
+          <div className="mt-2">
+            Insira seu código de validação aqui:
+            <form
+              onSubmit={async (evt) => {
+                evt.preventDefault()
+                let res = await confirmRegistration(submittedEmail, submitCode)
+                console.log('Response for user registration submission: ', res)
+              }}
+            >
+              <Input
+                className="w-full min-w-0"
+                id="code"
+                name="code"
+                type="text"
+                value={submitCode}
+                onChange={(evt) => setSubmitCode(evt.target.value)}
+              />
+              <div className="flex flex-row-reverse w-full p-2 sm:w-2/3 mt-4">
+                <Button type="submit" appearance="primary" disabled={wait}>
+                  Registrar {wait && <Spinner />}
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     )
@@ -387,6 +413,7 @@ export default function Home() {
                 onChange={personFormik.handleChange}
                 value={personFormik.values.name}
                 disabled={wait}
+                maxLength={10}
               />
             </div>
           </div>
