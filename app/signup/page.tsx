@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
 import { ptForm } from 'yup-locale-pt'
 import { useFormik } from 'formik'
@@ -41,6 +42,8 @@ const personValidationSchema = Yup.object({
 })
 
 export default function Home() {
+  const router = useRouter()
+
   const [wait, setWait] = useState(false)
   const [serverErrorMessage, setServerErrorMessage] = useState('')
   const [submissionSuccess, setSubmissionSuccess] = useState(false)
@@ -355,6 +358,12 @@ export default function Home() {
     return (
       <div className="h-dvh w-dvw overflow-auto">
         <div className="flex flex-col items-center justify-center min-h-full">
+          {serverErrorMessage !== '' ? (
+            <div className="w-4/5 flex flex-col items-center justify-center text-bold text-lg text-red-500 mt-4">
+              <p>Não foi possível finalizar o cadastro.</p>
+              <p>{serverErrorMessage}</p>
+            </div>
+          ) : null}
           <div className="flex flex-col items-center justify-center">
             <div>
               Caro(a), <b>{submittedUserName}</b>, verifique o seu e-mail.
@@ -374,6 +383,12 @@ export default function Home() {
                   currencyIso
                 )
                 console.log('Response for user registration submission: ', res)
+                if (res.success) {
+                  router.push('/login')
+                } else {
+                  setWait(false)
+                  setServerErrorMessage(res.message)
+                }
               }}
             >
               <Input
