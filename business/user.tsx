@@ -87,7 +87,8 @@ export async function registerUser(
 
 export async function confirmRegistration(
   email: string,
-  code: string
+  code: string,
+  currencyIso: string
 ): Promise<RegisterUserStatusT> {
   let a = {} as RegisterUserStatusT
   try {
@@ -97,6 +98,7 @@ export async function confirmRegistration(
       body: {
         email: email,
         code: code,
+        account_currency_iso: currencyIso,
       },
     })
 

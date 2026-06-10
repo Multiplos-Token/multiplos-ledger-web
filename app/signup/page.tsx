@@ -367,7 +367,12 @@ export default function Home() {
               onSubmit={async (evt) => {
                 evt.preventDefault()
                 setWait(true)
-                let res = await confirmRegistration(submittedEmail, submitCode)
+                let currencyIso = 'BRL'
+                let res = await confirmRegistration(
+                  submittedEmail,
+                  submitCode,
+                  currencyIso
+                )
                 console.log('Response for user registration submission: ', res)
               }}
             >

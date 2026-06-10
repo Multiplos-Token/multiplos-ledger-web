@@ -17,9 +17,17 @@ export async function POST(request: Request) {
     body: body.body ? JSON.stringify(body.body) : undefined,
   })
 
+  let rtext = await response.text()
+
   const cr: CallResponseData = {
     status: response.status,
-    data: JSON.parse(await response.text()),
+    data: (() => {
+      try {
+        return JSON.parse(rtext)
+      } catch {
+        return rtext
+      }
+    })(),
   }
 
   return Response.json(cr, { status: 200 })
