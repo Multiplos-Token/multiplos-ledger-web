@@ -413,9 +413,9 @@ export default function Home() {
     )
   } else {
     return (
-      <div className="h-dvh w-dvw overflow-auto">
+      <div className="flex flex-col h-dvh w-dvw overflow-auto">
         <form
-          className="flex flex-col items-center justify-center mt-8 mb-8"
+          className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit h-full w-dvw"
           onSubmit={personFormik.handleSubmit}
         >
           <div className="text-3xl">Cadastro:</div>
@@ -659,7 +659,6 @@ export default function Home() {
               {personFormik.errors.title}
             </div>
           ) : null}
-          <div className="flex-1" />
           <div className="flex flex-row-reverse w-full p-2 sm:w-2/3 mt-4">
             <Button type="submit" appearance="primary" disabled={wait}>
               Registrar {wait && <Spinner />}
