@@ -1,6 +1,6 @@
 'use client'
 
-import TopMenu from '@/components/topmenu'
+import TopMenu from './TopMenu'
 
 export default function Home() {
   return (
