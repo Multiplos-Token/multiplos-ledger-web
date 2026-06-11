@@ -148,5 +148,11 @@ export async function userLogoff() {
 }
 
 export async function userStatus() {
+  const response = await fetch(h('/b2f/api/user/session_status'), {
+    method: 'POST',
+  })
+  if (response.status >= 200 && response.status <= 299) {
+    return await response.json()
+  }
   // TODO: CONTINUE FROM HERE...
 }
