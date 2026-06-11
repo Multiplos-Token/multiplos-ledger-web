@@ -6,7 +6,6 @@ import * as Yup from 'yup'
 import { ptForm } from 'yup-locale-pt'
 import { useFormik } from 'formik'
 import { Input, Select, Button, Spinner } from '@fluentui/react-components'
-import Link from 'next/link'
 
 import { isPasswordStrong } from '@/util/Password'
 import {
@@ -66,7 +65,6 @@ export default function Home() {
       documentType: 'pass',
     },
     onSubmit: async (values) => {
-      console.log('Handling submit...')
       setWait(true)
       try {
         let status = await registerUser(values)
@@ -413,7 +411,7 @@ export default function Home() {
     )
   } else {
     return (
-      <div className="flex flex-col h-dvh w-dvw overflow-auto">
+      <div className="flex flex-col h-dvh w-dvw overflow-y-auto overflow-x-hidden">
         <div className="grow" />
         <form
           className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit w-dvw"

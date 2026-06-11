@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { useFormik } from 'formik'
+import { useRouter } from 'next/navigation'
 import { Input, Button, Spinner } from '@fluentui/react-components'
-import Link from 'next/link'
 import * as Yup from 'yup'
 import { ptForm } from 'yup-locale-pt'
 
@@ -13,13 +13,13 @@ import {
   RegisterUserStatusT,
   UserListDataT,
   confirmRegistration,
+  userLogin,
 } from '@/business/user'
 
 Yup.setLocale(ptForm)
 
 const loginValidationSchema = Yup.object({
   name: Yup.string().min(3, 'Mínimo de três caracteres').required(),
-  email: Yup.string().email('Formato de e-mail inválido').required(),
   password: Yup.string()
     .required()
     .test('strongness', 'A senha precisa ser forte', (value) =>
@@ -28,21 +28,35 @@ const loginValidationSchema = Yup.object({
 })
 
 export default function Home() {
+  const router = useRouter()
+
   const [wait, setWait] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const loginFormik = useFormik({
     initialValues: {
       name: '',
       password: '',
     },
     onSubmit: async (values) => {
-      setWait(false)
+      setWait(true)
+      console.log('Login values: ', values)
+      const status = await userLogin(values)
+
+      if (status.success) {
+        router.push('/enduser')
+      } else {
+        setErrorMessage(status.message)
+      }
     },
     validationSchema: loginValidationSchema,
   })
   return (
-    <div className="flex flex-col h-dvh w-dvw overflow-auto">
+    <div className="flex flex-col h-dvh w-dvw overflow-y-auto overflow-x-hidden">
       <div className="grow" />
-      <form className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit w-dvw">
+      <form
+        className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit w-dvw"
+        onSubmit={loginFormik.handleSubmit}
+      >
         <div className="text-2xl">Login:</div>
         <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
           <div className="w-1/3">Nome de Usuário:</div>
@@ -57,7 +71,7 @@ export default function Home() {
           />
         </div>
         {loginFormik.touched.name && loginFormik.errors.name ? (
-          <div className="w-4/5 text-red-500 text-bold">
+          <div className="w-4/5 md:w-2/5 text-red-500 text-bold">
             {loginFormik.errors.name}
           </div>
         ) : null}
@@ -74,13 +88,13 @@ export default function Home() {
           />
         </div>
         {loginFormik.touched.password && loginFormik.errors.password ? (
-          <div className="w-4/5 text-red-500 text-bold">
+          <div className="w-4/5 md:w-2/5 text-red-500 text-bold">
             {loginFormik.errors.password}
           </div>
         ) : null}
         <div className="flex flex-row-reverse p-2 w-fit md:w-2/5 mt-4">
           <Button type="submit" appearance="primary" disabled={wait}>
-            Registrar {wait && <Spinner />}
+            Entrar {wait && <Spinner />}
           </Button>
           <div className="mr-4">
             <Button onClick={() => history.back()} disabled={wait}>

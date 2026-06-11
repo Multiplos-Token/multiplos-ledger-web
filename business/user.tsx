@@ -39,6 +39,11 @@ export interface RegisterUserStatusT {
   message: string
 }
 
+export interface UserCredentialsT {
+  name: string
+  password: string
+}
+
 export async function registerUser(
   userData: UserDataT
 ): Promise<RegisterUserStatusT> {
@@ -114,4 +119,25 @@ export async function confirmRegistration(
     a.message = `Erro: ${e}. Tente novamente.`
   }
   return a
+}
+
+export async function userLogin(
+  credentials: UserCredentialsT
+): Promise<RegisterUserStatusT> {
+  let a = {} as RegisterUserStatusT
+  const response = await fetch(h('/bof/api/user/login'), {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(credentials),
+  })
+
+  console.log(response)
+
+  return a
+}
+
+export async function isUserLogged(): Promise<boolean> {
+  return true
 }
