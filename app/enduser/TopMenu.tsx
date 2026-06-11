@@ -1,5 +1,11 @@
 import { ReactNode, useState, useEffect } from 'react'
-import { Input, Select, Button, Spinner } from '@fluentui/react-components'
+import {
+  Input,
+  Select,
+  Button,
+  ToggleButton,
+  Spinner,
+} from '@fluentui/react-components'
 import {
   PersonRegular,
   ArrowUploadRegular,
@@ -30,8 +36,9 @@ export default function TopMenu({
   return (
     <div className="flex">
       <Button
+        shape="square"
         icon={<ArrowUploadRegular />}
-        appearance="subtle"
+        appearance={selected == 'register' ? 'outline' : 'subtle'}
         onClick={() => {
           setSelected('register')
           if (onSelect) {
@@ -42,8 +49,9 @@ export default function TopMenu({
         Registrar
       </Button>
       <Button
+        shape="square"
         icon={<ArchiveRegular />}
-        appearance="subtle"
+        appearance={selected == 'files' ? 'outline' : 'subtle'}
         onClick={() => {
           setSelected('files')
           if (onSelect) {
@@ -55,6 +63,7 @@ export default function TopMenu({
       </Button>
       {isUserSystemManager ? (
         <Button
+          shape="square"
           icon={<ArchiveRegular />}
           appearance="subtle"
           onClick={() => {
@@ -66,8 +75,9 @@ export default function TopMenu({
       ) : null}
       <div className="grow" />
       <Button
+        shape="square"
         icon={<PersonRegular />}
-        appearance="subtle"
+        appearance={selected == 'user' ? 'outline' : 'subtle'}
         onClick={() => {
           setSelected('user')
           if (onSelect) {
