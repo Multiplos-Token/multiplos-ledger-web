@@ -11,7 +11,7 @@ interface LoginResponseData {
 
 export async function POST(request: Request) {
   const body: LoginRequestBody = await request.json()
-  const response = await fetch(a('/api/user/login'), {
+  const response = await fetch(a('/user-management/api/user/login'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers'
+import { a } from '@/util/ServerHost'
 
 interface UserInfoData {
   name: string
@@ -25,7 +26,7 @@ export async function POST(request: Request) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('btoken_access_token')?.value || ''
 
-  const response = await fetch(`${process.env.BTOKEN_UIM_ADDRESS}/api/user/info`, {
+  const response = await fetch(a('/user-management/api/user/info'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

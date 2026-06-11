@@ -6,7 +6,7 @@ export async function POST(request: Request) {
   const cookieStore = await cookies()
   const accessToken = cookieStore.get('btoken_access_token')?.value || ''
 
-  const response = await fetch(a('/api/user/logoff'), {
+  const response = await fetch(a('/user-management/api/user/logoff'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

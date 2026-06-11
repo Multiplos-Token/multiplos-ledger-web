@@ -41,7 +41,7 @@ export default function Home() {
       setWait(true)
       console.log('Login values: ', values)
       const status = await userLogin(values)
-
+      setWait(false)
       if (status.success) {
         router.push('/enduser')
       } else {
@@ -58,6 +58,11 @@ export default function Home() {
         onSubmit={loginFormik.handleSubmit}
       >
         <div className="text-2xl">Login:</div>
+        {errorMessage != '' ? (
+          <div className="w-4/5 flex flex-col items-center justify-center text-bold text-lg text-red-500 mt-4">
+            {errorMessage}
+          </div>
+        ) : null}
         <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
           <div className="w-1/3">Nome de Usuário:</div>
           <Input

@@ -125,7 +125,7 @@ export async function userLogin(
   credentials: UserCredentialsT
 ): Promise<RegisterUserStatusT> {
   let a = {} as RegisterUserStatusT
-  const response = await fetch(h('/bof/api/user/login'), {
+  const response = await fetch(h('/b2f/api/user/login'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -133,7 +133,12 @@ export async function userLogin(
     body: JSON.stringify(credentials),
   })
 
-  console.log(response)
+  a.success = response.status >= 200 && response.status <= 299
+  if (a.success) {
+    a.message = 'Usuário logado com sucesso.'
+  } else {
+    a.message = 'Login falhou. Tente novamente.'
+  }
 
   return a
 }
