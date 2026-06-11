@@ -142,7 +142,3 @@ export async function userLogin(
 
   return a
 }
-
-export async function isUserLogged(): Promise<boolean> {
-  return true
-}
