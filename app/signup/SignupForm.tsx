@@ -660,7 +660,7 @@ export default function Home() {
           ) : null}
           <div className="flex flex-row-reverse w-full p-2 sm:w-2/3 mt-4">
             <Button type="submit" appearance="primary" disabled={wait}>
-              Registrar {wait && <Spinner />}
+              Registrar {wait && <Spinner size="tiny" />}
             </Button>
             <div className="mr-4">
               <Button onClick={() => history.back()} disabled={wait}>

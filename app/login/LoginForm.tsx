@@ -99,7 +99,7 @@ export default function Home() {
         ) : null}
         <div className="flex flex-row-reverse p-2 w-fit md:w-2/5 mt-4">
           <Button type="submit" appearance="primary" disabled={wait}>
-            Entrar {wait && <Spinner />}
+            Entrar {wait && <Spinner size="tiny" />}
           </Button>
           <div className="mr-4">
             <Button onClick={() => history.back()} disabled={wait}>
