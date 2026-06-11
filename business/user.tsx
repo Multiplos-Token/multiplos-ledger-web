@@ -146,3 +146,7 @@ export async function userLogin(
 export async function userLogoff() {
   const response = await fetch(h('/b2f/api/user/logoff'), { method: 'POST' })
 }
+
+export async function userStatus() {
+  // TODO: CONTINUE FROM HERE...
+}

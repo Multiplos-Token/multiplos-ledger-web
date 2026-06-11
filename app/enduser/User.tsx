@@ -12,8 +12,11 @@ export default function Files() {
 
   return (
     <div className="w-9/10 md:w-4/5 min-h-full flex flex-col">
-      <div className="grow flex items-center justify-center">
+      <div className="grow-1 flex items-center justify-center">
         Dados de usuário
+      </div>
+      <div className="grow-2 flex items-center justify-center">
+        Dados financeiros
       </div>
       <div className="flex flex-row-reverse mb-4">
         <Button
@@ -22,9 +25,10 @@ export default function Files() {
             await userLogoff()
             router.push('/')
           }}
+          appearance="subtle"
           disabled={loggingOff}
         >
-          logoff here {loggingOff ? <Spinner size="tiny" /> : null}
+          Logoff {loggingOff ? <Spinner size="tiny" /> : null}
         </Button>
       </div>
     </div>
