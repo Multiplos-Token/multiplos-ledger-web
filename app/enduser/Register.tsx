@@ -12,7 +12,7 @@ import {
   Select,
 } from '@fluentui/react-components'
 
-import { registerFile } from '@/business/file'
+import { registerFile, getMimeType } from '@/business/file'
 
 Yup.setLocale(ptForm)
 
@@ -115,6 +115,8 @@ export default function Files() {
             onChange={(event) => {
               const file = event.currentTarget.files?.[0] || null
               fileFormik.setFieldValue('file', file)
+
+              // TODO: Verify file mime-type, using helper, and update file type accordingly
             }}
             disabled={wait}
           />
