@@ -25,8 +25,6 @@ export default function Files() {
     loadData()
   }, [])
 
-  console.log('This is user info: ', userInfo)
-
   return (
     <div className="w-9/10 md:w-4/5 min-h-full flex flex-col">
       <div className="grow-1 flex items-center justify-center">
