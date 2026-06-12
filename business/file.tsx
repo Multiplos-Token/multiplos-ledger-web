@@ -3,6 +3,7 @@ import { c } from '@/util/ClientHost'
 export interface RegisterFileT {
   name: string
   file: File
+  type: string
   autoSign: boolean
 }
 

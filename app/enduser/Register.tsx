@@ -52,6 +52,7 @@ export default function Files() {
       const registerResponse = await registerFile({
         name: values.fileName,
         file: values.file!,
+        type: values.fileType,
         autoSign: true,
       })
       fileFormik.resetForm()
@@ -284,6 +285,12 @@ export default function Files() {
             </optgroup>
           </Select>
         </div>
+        {fileFormik.touched.fileType && fileFormik.errors.fileType ? (
+          <div className="w-4/5 md:w-2/5 text-red-500 text-bold">
+            {fileFormik.errors.fileType}
+          </div>
+        ) : null}
+
         <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
           <div className="w-1/3">Assinar:</div>
           <div className="grow">
@@ -305,6 +312,7 @@ export default function Files() {
               onClick={() => {
                 fileFormik.resetForm()
                 setDefaultRegister(false)
+                setSuccess(false)
 
                 // Clear file input form
                 const element = document.getElementById(
