@@ -6,4 +6,21 @@ export interface RegisterFileT {
   autoSign: boolean
 }
 
-export async function registerFile() {}
+export interface FileDataT {
+  referenceId: string
+  transactionId: string
+}
+
+export interface FileRegistrationResponseT {
+  success: boolean
+  fileData?: FileDataT
+  message: string
+}
+
+export async function registerFile(
+  rf: RegisterFileT
+): Promise<FileRegistrationResponseT> {
+  let a = { success: false } as FileRegistrationResponseT
+
+  return a
+}
