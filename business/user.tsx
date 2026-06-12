@@ -1,4 +1,4 @@
-import { c, h } from '@/util/ClientHost'
+import { c, h, logoff } from '@/util/ClientHost'
 
 export interface UserDataT {
   name: string
@@ -42,6 +42,26 @@ export interface RegisterUserStatusT {
 export interface UserCredentialsT {
   name: string
   password: string
+}
+
+export interface UserStatusResponseT {
+  success: boolean
+  value?: any
+}
+
+export interface UserInfoT {
+  name: string
+  password: string
+  email: string
+  first_name: string
+  last_name: string
+  complete_name: string
+  title: string
+  phone_number: string
+  country_iso2: string
+  legal_identification: string
+  default_ether_account: string
+  status: string
 }
 
 export async function registerUser(
@@ -147,12 +167,25 @@ export async function userLogoff() {
   const response = await fetch(h('/b2f/api/user/logoff'), { method: 'POST' })
 }
 
-export async function userStatus() {
+export async function userStatus(): Promise<UserStatusResponseT> {
+  let u = { success: false } as UserStatusResponseT
+
   const response = await fetch(h('/b2f/api/user/session_status'), {
     method: 'POST',
   })
-  if (response.status >= 200 && response.status <= 299) {
-    return await response.json()
+
+  if (response.status == 401) {
+    await logoff()
+    return u
   }
-  // TODO: CONTINUE FROM HERE...
+
+  u.value = await response.json()
+
+  if (response.status >= 200 && response.status <= 299) {
+    u.success = true
+    // Only user info is relevant - any other data can be ignored:
+    u.value = u.value.user_info
+  }
+
+  return u
 }
