@@ -32,6 +32,7 @@ export default function Home() {
 
   const [wait, setWait] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+
   const loginFormik = useFormik({
     initialValues: {
       name: '',
