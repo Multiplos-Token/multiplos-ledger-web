@@ -1,6 +1,10 @@
-import base85 from 'ascii85'
+import { Buffer } from 'buffer'
+import base85 from 'base85'
 
 import { c } from '@/util/ClientHost'
+
+// Enable global Buffer polyfill:
+window.Buffer = window.Buffer || Buffer
 
 export interface RegisterFileT {
   name: string
@@ -73,7 +77,7 @@ async function convertFileToAscii85(file: File): Promise<string> {
   try {
     const arrayBuffer = await loadFile(file)
     const uint8Array = new Uint8Array(arrayBuffer)
-    return base85.encode(uint8Array)
+    return base85.encode(Buffer.from(uint8Array))
   } catch {
     return ''
   }
