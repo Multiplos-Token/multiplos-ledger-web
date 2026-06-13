@@ -1,3 +1,5 @@
+import base85 from 'ascii85'
+
 import { c } from '@/util/ClientHost'
 
 export interface RegisterFileT {
@@ -5,6 +7,7 @@ export interface RegisterFileT {
   file: File
   type: string
   autoSign: boolean
+  publicSign: boolean
 }
 
 export interface FileDataT {
@@ -18,12 +21,75 @@ export interface FileRegistrationResponseT {
   message: string
 }
 
+export interface FileSubmissionT {
+  name: string
+  data: string
+  format: string
+  mime_type: string
+  public: boolean
+  md5: string
+  sha2_256: string
+  sha3_256: string
+}
+
 export async function registerFile(
   rf: RegisterFileT
 ): Promise<FileRegistrationResponseT> {
+  let s = {
+    name: rf.name,
+    data: await convertFileToAscii85(rf.file), // TODO: Evaluate when maintain data in text/plain format
+    format: 'ascii85',
+    mime_type: rf.type,
+    public: rf.publicSign,
+    md5: fileMD5Sum(rf.file),
+    sha2_256: fileSHA2Sum256(rf.file),
+    sha3_256: fileSHA3Sum256(rf.file),
+  } as FileSubmissionT
   let a = { success: false } as FileRegistrationResponseT
-
   return a
+}
+
+function loadFile(file: File): Promise<ArrayBuffer> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+
+    // When the file loads, get the binary data
+    reader.onload = function (event) {
+      const arrayBuffer = event.target?.result as ArrayBuffer
+      // TODO: What happens when result is null or undefined? It needs to be evaluated.
+      resolve(arrayBuffer)
+    }
+
+    reader.onerror = function (error) {
+      reject(error)
+    }
+
+    // Read the file object as a raw binary buffer
+    reader.readAsArrayBuffer(file)
+  })
+}
+
+async function convertFileToAscii85(file: File): Promise<string> {
+  try {
+    const arrayBuffer = await loadFile(file)
+    const uint8Array = new Uint8Array(arrayBuffer)
+    return base85.encode(uint8Array)
+  } catch {
+    return ''
+  }
+  return ''
+}
+
+function fileMD5Sum(file: File): string {
+  return ''
+}
+
+function fileSHA2Sum256(file: File): string {
+  return ''
+}
+
+function fileSHA3Sum256(file: File): string {
+  return ''
 }
 
 /**

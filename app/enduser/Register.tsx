@@ -40,6 +40,7 @@ export default function Files() {
   const [defaultRegister, setDefaultRegister] = useState<boolean | 'mixed'>(
     false
   )
+  const [publish, setPublish] = useState<boolean | 'mixed'>(false)
 
   const fileFormik = useFormik({
     initialValues: {
@@ -49,16 +50,20 @@ export default function Files() {
     },
     onSubmit: async (values) => {
       setWait(true)
+
       const registerResponse = await registerFile({
         name: values.fileName,
         file: values.file!,
         type: values.fileType,
-        autoSign: true,
+        autoSign: defaultRegister === true,
+        publicSign: publish === true,
       })
       fileFormik.resetForm()
       setWait(false)
       setSuccess(true)
       setDefaultRegister(false)
+      setPublish(false)
+
       // Clear file input form
       const element = document.getElementById('file') as HTMLInputElement
       if (element) {
@@ -94,24 +99,6 @@ export default function Files() {
             </div>
           </div>
         ) : null}
-
-        <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
-          <div className="w-1/3">Nome:</div>
-          <Input
-            className="grow min-w-0"
-            id="fileName"
-            name="fileName"
-            type="text"
-            onChange={fileFormik.handleChange}
-            value={fileFormik.values.fileName}
-            disabled={wait}
-          />
-        </div>
-        {fileFormik.touched.fileName && fileFormik.errors.fileName ? (
-          <div className="w-4/5 md:w-2/5 text-red-500 text-bold">
-            {fileFormik.errors.fileName}
-          </div>
-        ) : null}
         <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
           <div className="w-1/3">Arquivo:</div>
           <input
@@ -133,6 +120,23 @@ export default function Files() {
         {fileFormik.touched.file && fileFormik.errors.file ? (
           <div className="w-4/5 md:w-2/5 text-red-500 text-bold">
             {fileFormik.errors.file}
+          </div>
+        ) : null}
+        <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
+          <div className="w-1/3">Nome:</div>
+          <Input
+            className="grow min-w-0"
+            id="fileName"
+            name="fileName"
+            type="text"
+            onChange={fileFormik.handleChange}
+            value={fileFormik.values.fileName}
+            disabled={wait}
+          />
+        </div>
+        {fileFormik.touched.fileName && fileFormik.errors.fileName ? (
+          <div className="w-4/5 md:w-2/5 text-red-500 text-bold">
+            {fileFormik.errors.fileName}
           </div>
         ) : null}
         <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
@@ -312,6 +316,7 @@ export default function Files() {
               onClick={() => {
                 fileFormik.resetForm()
                 setDefaultRegister(false)
+                setPublish(false)
                 setSuccess(false)
 
                 // Clear file input form
