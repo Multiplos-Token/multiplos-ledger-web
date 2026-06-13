@@ -1,10 +1,13 @@
 import { Buffer } from 'buffer'
 import base85 from 'base85'
+import { md5, sha256, sha3 } from 'hash-wasm'
 
 import { c } from '@/util/ClientHost'
 
 // Enable global Buffer polyfill:
-window.Buffer = window.Buffer || Buffer
+if (typeof window !== 'undefined') {
+  window.Buffer = window.Buffer || Buffer
+}
 
 export interface RegisterFileT {
   name: string
@@ -25,31 +28,29 @@ export interface FileRegistrationResponseT {
   message: string
 }
 
-export interface FileSubmissionT {
-  name: string
-  data: string
-  format: string
-  mime_type: string
-  public: boolean
-  md5: string
-  sha2_256: string
-  sha3_256: string
-}
-
 export async function registerFile(
   rf: RegisterFileT
 ): Promise<FileRegistrationResponseT> {
-  let s = {
-    name: rf.name,
-    data: await convertFileToAscii85(rf.file), // TODO: Evaluate when maintain data in text/plain format
-    format: 'ascii85',
-    mime_type: rf.type,
-    public: rf.publicSign,
-    md5: fileMD5Sum(rf.file),
-    sha2_256: fileSHA2Sum256(rf.file),
-    sha3_256: fileSHA3Sum256(rf.file),
-  } as FileSubmissionT
   let a = { success: false } as FileRegistrationResponseT
+
+  const submissionResponse = await c({
+    path: '/ledger-management/api/user/file',
+    method: 'POST',
+    body: {
+      name: rf.name,
+      // TODO: Evaluate when maintain data in text/plain format
+      data: await convertFileToAscii85(rf.file),
+      format: 'ascii85',
+      mime_type: rf.type,
+      public: rf.publicSign,
+      md5: await fileMD5Sum(rf.file),
+      sha2_256: await fileSHA2Sum256(rf.file),
+      sha3_256: await fileSHA3Sum256(rf.file),
+    },
+  })
+
+  console.log('Document registration response: ', submissionResponse)
+
   return a
 }
 
@@ -76,24 +77,49 @@ function loadFile(file: File): Promise<ArrayBuffer> {
 async function convertFileToAscii85(file: File): Promise<string> {
   try {
     const arrayBuffer = await loadFile(file)
-    const uint8Array = new Uint8Array(arrayBuffer)
-    return base85.encode(Buffer.from(uint8Array))
+    let uint8Array = new Uint8Array(arrayBuffer)
+    console.log('Array buffer size: ', uint8Array.byteLength)
+
+    const encodedData = base85.encode(Buffer.from(uint8Array), 'ascii85')
+    console.log('Encoded data: ', encodedData)
+    const decodedAscii85 = base85.decode(encodedData, 'ascii85')
+    console.log('Decoded data', decodedAscii85)
+
+    // Remove unnecessary wrappers ('<~', '~>') and return
+    return encodedData.replace(/^<~/, '').replace(/~>$/, '')
   } catch {
     return ''
   }
-  return ''
 }
 
-function fileMD5Sum(file: File): string {
-  return ''
+async function fileMD5Sum(file: File): Promise<string> {
+  try {
+    const arrayBuffer = await loadFile(file)
+    const uint8Array = new Uint8Array(arrayBuffer)
+    return await md5(uint8Array)
+  } catch {
+    return ''
+  }
 }
 
-function fileSHA2Sum256(file: File): string {
-  return ''
+async function fileSHA2Sum256(file: File): Promise<string> {
+  try {
+    const arrayBuffer = await loadFile(file)
+    const uint8Array = new Uint8Array(arrayBuffer)
+    return await sha256(uint8Array)
+  } catch {
+    return ''
+  }
 }
 
-function fileSHA3Sum256(file: File): string {
-  return ''
+async function fileSHA3Sum256(file: File): Promise<string> {
+  try {
+    const arrayBuffer = await loadFile(file)
+    const uint8Array = new Uint8Array(arrayBuffer)
+    return await sha3(uint8Array, 256)
+  } catch {
+    return ''
+  }
 }
 
 /**

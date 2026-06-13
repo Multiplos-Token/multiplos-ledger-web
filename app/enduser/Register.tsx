@@ -24,9 +24,6 @@ const fileRegisterValidationSchema = Yup.object({
     .required('Você precisa escolher um arquivo')
     .test('fileSize', 'O arquivo é muito grande (Max 4MB)', (value) => {
       if (!value) return true // Skip if no file (handled by required)
-      console.log('Validating file: ', value)
-      console.log('File size: ', value.size)
-      console.log('File is file?', value instanceof File)
       return value.size <= MAX_FILE_SIZE
     }),
   fileName: Yup.string().required(),
