@@ -80,13 +80,8 @@ async function convertFileToAscii85(file: File): Promise<string> {
   try {
     const arrayBuffer = await loadFile(file)
     let uint8Array = new Uint8Array(arrayBuffer)
-    console.log('Array buffer size: ', uint8Array.byteLength)
-
     const encodedData = base85.encode(Buffer.from(uint8Array), 'ascii85')
-    console.log('Encoded data: ', encodedData)
     const decodedAscii85 = base85.decode(encodedData, 'ascii85')
-    console.log('Decoded data', decodedAscii85)
-
     // Remove unnecessary wrappers ('<~', '~>') and return
     return encodedData.replace(/^<~/, '').replace(/~>$/, '')
   } catch {
