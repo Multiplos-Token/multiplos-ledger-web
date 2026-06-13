@@ -1,6 +1,6 @@
-import { Buffer } from 'buffer'
-import base85 from 'base85'
 import { md5, sha256, sha3 } from 'hash-wasm'
+import { Buffer } from 'buffer'
+import base85 from '@alttiri/base85'
 
 import { c } from '@/util/ClientHost'
 
