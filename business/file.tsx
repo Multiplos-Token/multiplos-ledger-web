@@ -1,6 +1,6 @@
-import { md5, sha256, sha3 } from 'hash-wasm'
 import { Buffer } from 'buffer'
 import base85 from '@alttiri/base85'
+import { md5, sha256, sha3 } from 'hash-wasm'
 
 import { c } from '@/util/ClientHost'
 
@@ -49,6 +49,8 @@ export async function registerFile(
     },
   })
 
+  // TODO: Continue implementation after proper user management routines are
+  // Implemented, so the user can sign its file.
   console.log('Document registration response: ', submissionResponse)
 
   return a
