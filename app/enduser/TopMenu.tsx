@@ -28,8 +28,6 @@ export default function TopMenu({
   const [isUserSystemManager, setUserSystemManager] = useState(false)
 
   const verifyUserPermission = async () => {
-    // TODO: Verify if user is system manager or root, to show the "Management" button
-    console.log('Verify user permissions here.')
     const sysmag = await verifyUserSystemManager()
     setUserSystemManager(sysmag)
   }
