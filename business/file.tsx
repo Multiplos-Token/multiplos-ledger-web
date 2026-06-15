@@ -49,9 +49,34 @@ export async function registerFile(
     },
   })
 
-  // TODO: Continue implementation after proper user management routines are
-  // Implemented, so the user can sign its file.
-  console.log('Document registration response: ', submissionResponse)
+  a.success =
+    submissionResponse.status >= 200 && submissionResponse.status <= 299
+
+  if (!a.success) {
+    a.message = `Não foi possível registrar documento: ${submissionResponse.data.message}`
+    return a
+  }
+
+  a.fileData = {
+    referenceId: submissionResponse.data.reference_id,
+  } as FileDataT
+
+  if (rf.autoSign) {
+    // Use the returned reference id to register file in ledger:
+    const signatureResponse = await c({
+      path: `/ledger-management/api/user/ledger/assign_document/${a.fileData.referenceId}`,
+      method: 'PUT',
+    })
+
+    console.log('This is signature response: ', signatureResponse)
+
+    if (signatureResponse.status >= 200 && signatureResponse.status <= 299) {
+      a.fileData.transactionId = 'something should be put here'
+    } else {
+      a.fileData.transactionId = ''
+      a.message = `Some error ocurred: ${signatureResponse.data.error}`
+    }
+  }
 
   return a
 }

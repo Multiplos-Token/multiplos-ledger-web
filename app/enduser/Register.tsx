@@ -38,6 +38,8 @@ export default function Files() {
     false
   )
   const [publish, setPublish] = useState<boolean | 'mixed'>(false)
+  const [referenceId, setReferenceId] = useState('')
+  const [transactionId, setTransactionId] = useState('')
 
   const fileFormik = useFormik({
     initialValues: {
@@ -55,9 +57,15 @@ export default function Files() {
         autoSign: defaultRegister === true,
         publicSign: publish === true,
       })
+
+      console.log('This is the register response:', registerResponse)
+      setSuccess(registerResponse.success)
+      if (registerResponse.success) {
+        setReferenceId(registerResponse.fileData!.referenceId)
+      }
+
       fileFormik.resetForm()
       setWait(false)
-      setSuccess(true)
       setDefaultRegister(false)
       setPublish(false)
 
@@ -87,13 +95,17 @@ export default function Files() {
           <div className="w-4/5 flex flex-col items-center justify-center text-bold text-lg mt-4">
             <div className="mb-4">Arquivo registrado com sucesso.</div>
             <div>Identificador de referência:</div>
-            <div className="text-bold text-sm mb-4">
-              fdhjsfdhsjdhfkjsdfhjksfkdfdksjhfdkjs
+            <div className="text-bold text-sm mb-4 w-80 overflow-auto flex items-center justify-center">
+              {referenceId}
             </div>
-            <div>Transação de Assinatura: </div>
-            <div className="text-bold text-sm mb-4">
-              0x50170c2188f63cb0b8b0959d5e6a4490e1f442b5137bb608ac34c19574855e7a
-            </div>
+            {transactionId !== '' ? (
+              <>
+                <div>Transação de Assinatura: </div>
+                <div className="text-bold text-sm mb-4">
+                  0x50170c2188f63cb0b8b0959d5e6a4490e1f442b5137bb608ac34c19574855e7a
+                </div>
+              </>
+            ) : null}
           </div>
         ) : null}
         <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
@@ -291,7 +303,6 @@ export default function Files() {
             {fileFormik.errors.fileType}
           </div>
         ) : null}
-
         <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
           <div className="w-1/3">Assinar:</div>
           <div className="grow">
@@ -304,6 +315,19 @@ export default function Files() {
             />
           </div>
         </div>
+        <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
+          <div className="w-1/3">Publicar:</div>
+          <div className="grow">
+            <Checkbox
+              checked={publish}
+              onChange={(ev, data) => {
+                setPublish(data.checked)
+              }}
+              disabled={wait}
+            />
+          </div>
+        </div>
+
         <div className="flex flex-row-reverse p-2 w-fit md:w-2/5 mt-4">
           <Button type="submit" appearance="primary" disabled={wait}>
             Submeter {wait && <Spinner size="tiny" />}
