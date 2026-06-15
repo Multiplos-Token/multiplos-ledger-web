@@ -15,6 +15,8 @@ import {
 } from '@fluentui/react-icons'
 import { useRouter } from 'next/navigation'
 
+import { verifyUserSystemManager } from '@/business/user'
+
 export default function TopMenu({
   onSelect,
 }: {
@@ -28,7 +30,8 @@ export default function TopMenu({
   const verifyUserPermission = async () => {
     // TODO: Verify if user is system manager or root, to show the "Management" button
     console.log('Verify user permissions here.')
-    setUserSystemManager(false)
+    const sysmag = await verifyUserSystemManager()
+    setUserSystemManager(sysmag)
   }
 
   useEffect(() => {

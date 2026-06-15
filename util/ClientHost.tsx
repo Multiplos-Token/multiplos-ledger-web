@@ -23,10 +23,12 @@ export async function c({
   path,
   method = 'GET',
   body = undefined,
+  onUnauthorizedLogoff = true,
 }: {
   path: string
   method?: string
   body?: any
+  onUnauthorizedLogoff?: boolean
 }): Promise<CallResponseData> {
   let response = await fetch(h('/b2f/call'), {
     method: 'POST',
@@ -39,7 +41,7 @@ export async function c({
 
   const responseBody = JSON.parse(await response.text()) as CallResponseData
 
-  if (responseBody.status == 401) {
+  if (onUnauthorizedLogoff === true && responseBody.status == 401) {
     await logoff()
   }
 

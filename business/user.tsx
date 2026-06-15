@@ -189,3 +189,18 @@ export async function userStatus(): Promise<UserStatusResponseT> {
 
   return u
 }
+
+export async function verifyUserSystemManager(): Promise<boolean> {
+  const statusResponse = await userStatus()
+  if (statusResponse.success !== true) {
+    return false
+  }
+
+  const response = await c({
+    path: `/user-management/api/systemadmin/user/${statusResponse.value.name}/permission/system_admin`,
+    method: 'POST',
+    onUnauthorizedLogoff: false,
+  })
+
+  return response.status === 204
+}
