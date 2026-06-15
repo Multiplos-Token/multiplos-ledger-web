@@ -16,7 +16,7 @@ export default function Management() {
   const initialize = async () => {
     if (await verifyUserSystemManager()) {
       const userData = await loadAllUsers()
-      console.log('This is user data:', userData)
+      setUsers(userData.userData as Array<any>)
       setInitialized(true)
     } else {
       router.push('/enduser')
@@ -36,7 +36,7 @@ export default function Management() {
           }
         }}
       />
-      <UserList />
+      <UserList data={users} />
     </div>
   ) : (
     <div className="flex min-h-full flex-col w-dvw">Carregando...</div>

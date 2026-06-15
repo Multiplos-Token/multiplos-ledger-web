@@ -15,7 +15,7 @@ import {
 } from '@fluentui/react-components'
 import { MoneyRegular } from '@fluentui/react-icons'
 
-export default function UserList() {
+export default function UserList({ data }: { data: Array<any> }) {
   const [open, setOpen] = useState(false)
   const restoreFocusTargetAttribute = useRestoreFocusTarget()
 
@@ -26,54 +26,43 @@ export default function UserList() {
           <tr>
             <th className="pb-2">Nome</th>
             <th className="pb-2">E-mail</th>
+            <th className="pb-2">País</th>
             <th className="pb-2">Identificação</th>
             <th className="pb-2">Balanço</th>
             <th className="pb-2">Ações</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td className="pb-2">Paulo</td>
-            <td className="pb-2">psfilho@gmail.com</td>
-            <td className="pb-2">RG:50.490.790-6</td>
-            <td className="pb-2 cursor-pointer underline">Consultar...</td>
-            <td className="pb-2">
-              <Tooltip content="Registrar Depósito" relationship="label">
-                <Button
-                  icon={
-                    <MoneyRegular
-                      {...restoreFocusTargetAttribute}
-                      onClick={() => {
-                        // it is the user responsibility to open the dialog
-                        setOpen(true)
-                      }}
-                    />
-                  }
-                />
-              </Tooltip>
-            </td>
-          </tr>
-          <tr>
-            <td className="pb-2">Paulo</td>
-            <td className="pb-2">psfilho@gmail.com</td>
-            <td className="pb-2">RG:50.490.790-6</td>
-            <td className="pb-2 cursor-pointer underline">Consultar...</td>
-            <td className="pb-2">
-              <Tooltip content="Registrar Depósito" relationship="label">
-                <Button
-                  icon={
-                    <MoneyRegular
-                      {...restoreFocusTargetAttribute}
-                      onClick={() => {
-                        // it is the user responsibility to open the dialog
-                        setOpen(true)
-                      }}
-                    />
-                  }
-                />
-              </Tooltip>
-            </td>
-          </tr>
+          {(() => {
+            return data.map((d, i) => {
+              return (
+                <tr key={i}>
+                  <td className="pb-2">{d.name}</td>
+                  <td className="pb-2">{d.email}</td>
+                  <td className="pb-2">{d.country_iso2}</td>
+                  <td className="pb-2">{d.legal_identification}</td>
+                  <td className="pb-2 cursor-pointer underline">
+                    Consultar...
+                  </td>
+                  <td className="pb-2">
+                    <Tooltip content="Registrar Depósito" relationship="label">
+                      <Button
+                        icon={
+                          <MoneyRegular
+                            {...restoreFocusTargetAttribute}
+                            onClick={() => {
+                              // it is the user responsibility to open the dialog
+                              setOpen(true)
+                            }}
+                          />
+                        }
+                      />
+                    </Tooltip>
+                  </td>
+                </tr>
+              )
+            })
+          })()}
         </tbody>
       </table>
       <Dialog
