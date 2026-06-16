@@ -16,20 +16,26 @@ export default function Home() {
           setSelected(s)
         }}
       />
-      <div className="grow flex items-center justify-center">
-        {(() => {
-          switch (selected) {
-            case 'register':
-              return <Register />
-            case 'files':
-              return <Files />
-            case 'user':
-              return <User />
-            default:
-              return null
-          }
-        })()}
-      </div>
+      {(() => {
+        switch (selected) {
+          case 'register':
+            return (
+              <div className="grow flex items-center justify-center">
+                <Register />
+              </div>
+            )
+          case 'files':
+            return <Files />
+          case 'user':
+            return (
+              <div className="grow flex items-center justify-center">
+                <User />
+              </div>
+            )
+          default:
+            return null
+        }
+      })()}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import base85 from '@alttiri/base85'
 import { md5, sha256, sha3 } from 'hash-wasm'
 
 import { c } from '@/util/ClientHost'
+import { UserResponseT } from './system'
 
 // Enable global Buffer polyfill:
 if (typeof window !== 'undefined') {
@@ -246,3 +247,21 @@ export function getMimeType(filenameOrExtension: string): string {
 // console.log(getMimeType('report.docx')); -> 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 // console.log(getMimeType('.png'));        -> 'image/png'
 // console.log(getMimeType('unknown.xyz'));  -> 'application/octet-stream'
+
+export async function listUserFiles(): Promise<UserResponseT> {
+  let a = {} as UserResponseT
+
+  const response = await c({
+    path: '/ledger-management/api/user/files',
+    method: 'GET',
+  })
+
+  a.success = response.status >= 200 && response.status <= 299
+  if (a.success) {
+    a.userData = response.data as Array<any>
+  } else {
+    a.message = `Erro: ${response.data.error}`
+  }
+
+  return a
+}
