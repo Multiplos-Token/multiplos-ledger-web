@@ -17,13 +17,16 @@ import {
 } from '@fluentui/react-components'
 import { MoneyRegular } from '@fluentui/react-icons'
 
-import { loadUserBalance } from '@/business/system'
+import { loadUserBalance, executeUserDeposit } from '@/business/system'
 
 export default function UserList({ data }: { data: Array<any> }) {
   const [users, setUsers] = useState(data)
   const [open, setOpen] = useState(false)
   const [currentDialogUserName, setCurrentDialogUserName] = useState<
     string | null
+  >(null)
+  const [currentDialogUserIndex, setCurrentDialogUserIndex] = useState<
+    number | null
   >(null)
   const [depositValue, setDepositValue] = useState('')
   const [depositValueError, setDepositValueError] = useState('')
@@ -39,6 +42,19 @@ export default function UserList({ data }: { data: Array<any> }) {
   const verifyValueFormat = (v: string): boolean => {
     const reg = /^\d+,\d{2}$/g
     return v.match(reg) !== null && parseFloat(v.replaceAll(',', '.')) != 0
+  }
+
+  const balanceConsult = async (i: number) => {
+    const response = await loadUserBalance(users[i].name)
+    let newUsers = JSON.parse(JSON.stringify(users))
+    if (response.success) {
+      newUsers[i].balance = response.userData!.balance
+      newUsers[i].account_error = ''
+    } else {
+      newUsers[i].balance = 0
+      newUsers[i].account_error = response.message!
+    }
+    setUsers(newUsers)
   }
 
   return (
@@ -65,18 +81,7 @@ export default function UserList({ data }: { data: Array<any> }) {
                   <td className="pb-2">{d.legal_identification}</td>
                   <td
                     className="pb-2 cursor-pointer underline"
-                    onClick={async () => {
-                      const response = await loadUserBalance(d.name)
-                      let newUsers = JSON.parse(JSON.stringify(users))
-                      if (response.success) {
-                        newUsers[i].balance = response.userData!.balance
-                        newUsers[i].account_error = ''
-                      } else {
-                        newUsers[i].balance = 0
-                        newUsers[i].account_error = response.message!
-                      }
-                      setUsers(newUsers)
-                    }}
+                    onClick={() => balanceConsult(i)}
                   >
                     {typeof d.balance !== 'undefined' ? (
                       <span>{formatterBRL.format(d.balance / 100)}</span>
@@ -92,6 +97,7 @@ export default function UserList({ data }: { data: Array<any> }) {
                         onClick={() => {
                           // it is the user responsibility to open the dialog
                           setCurrentDialogUserName(d.name)
+                          setCurrentDialogUserIndex(i)
                           setOpen(true)
                         }}
                         disabled={d.account_error !== ''}
@@ -112,6 +118,7 @@ export default function UserList({ data }: { data: Array<any> }) {
           if (!depositSubmitting) {
             setOpen(data.open)
             setCurrentDialogUserName(null)
+            setCurrentDialogUserIndex(null)
             setDepositValue('')
             setDepositDescription('')
           }
@@ -162,6 +169,32 @@ export default function UserList({ data }: { data: Array<any> }) {
               <Button
                 appearance="primary"
                 disabled={depositSubmitting || depositValueError !== ''}
+                onClick={async () => {
+                  if (depositValue !== '' && depositValueError === '') {
+                    // Proceed
+                    setDepositSubmitting(true)
+                    const response = await executeUserDeposit({
+                      name: currentDialogUserName!,
+                      value: Math.floor(
+                        parseFloat(depositValue.replace(',', '.')) * 100
+                      ),
+                      description: depositDescription,
+                    })
+                    console.log('This is deposit response:', response)
+                    if (response.success) {
+                      setDepositValue('')
+                      setDepositValueError('')
+                      setDepositDescription('')
+                      setOpen(false)
+                      await balanceConsult(currentDialogUserIndex!)
+                    } else {
+                      setDepositValueError(
+                        `Não foi possível fazer o depósito: ${response.userData.message}`
+                      )
+                    }
+                    setDepositSubmitting(false)
+                  } // Otherwise, just ignore
+                }}
               >
                 Submeter{depositSubmitting ? <Spinner size="tiny" /> : null}
               </Button>

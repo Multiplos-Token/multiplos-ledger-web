@@ -52,3 +52,37 @@ export async function loadUserBalance(
 
   return a
 }
+
+export async function executeUserDeposit({
+  name,
+  value,
+  description,
+  currency = 'BRL',
+}: {
+  name: string
+  value: Number
+  description: string
+  currency?: string
+}): Promise<SimpleUserResponseT> {
+  let a = {} as SimpleUserResponseT
+
+  const response = await c({
+    path: `/financial-management/api/financial/user/${name}/deposit`,
+    method: 'PUT',
+    body: {
+      currency: currency,
+      amount: value,
+      description: description,
+    },
+  })
+
+  a.success = response.status >= 200 && response.status <= 299
+
+  if (a.success) {
+    a.userData = response.data
+  } else {
+    a.message = `Aconteceu algum problema: ${response.data.error}`
+  }
+
+  return a
+}
