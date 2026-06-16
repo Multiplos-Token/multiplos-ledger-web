@@ -114,7 +114,9 @@ export default function Files() {
             {transactionId !== '' ? (
               <>
                 <div>Transação de Assinatura: </div>
-                <div className="text-bold text-sm mb-4">{transactionId}</div>
+                <div className="text-bold text-sm mb-4 w-80 overflow-auto flex items-center justify-center">
+                  {transactionId}
+                </div>
               </>
             ) : null}
           </div>

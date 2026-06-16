@@ -25,6 +25,8 @@ export default function Files() {
     )
   }
 
+  console.log('Files: ', fileData)
+
   return (
     <div className="flex grow flex-col items-stretch">
       <table className="m-4">
@@ -34,6 +36,7 @@ export default function Files() {
             <th className="pb-2">Tipo (mime)</th>
             <th className="pb-2">Publicado</th>
             <th className="pb-2">Id de Referência</th>
+            <th className="pb-2">Ações</th>
           </tr>
         </thead>
         <tbody>
@@ -41,10 +44,13 @@ export default function Files() {
             return fileData.map((v, i) => {
               return (
                 <tr key={i}>
-                  <td className="pb-2">1</td>
-                  <td className="pb-2">1</td>
-                  <td className="pb-2">1</td>
-                  <td className="pb-2">1</td>
+                  <td className="pb-2">{v.name}</td>
+                  <td className="pb-2">{v.mime_type}</td>
+                  <td className="pb-2">{v.public ? 'sim' : 'não'}</td>
+                  <td className="pb-2">
+                    <div className="truncate w-80">{v.reference_id}</div>
+                  </td>
+                  <td className="pb-2">...</td>
                 </tr>
               )
             })
