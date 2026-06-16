@@ -58,10 +58,19 @@ export default function Files() {
         publicSign: publish === true,
       })
 
-      console.log('This is the register response:', registerResponse)
       setSuccess(registerResponse.success)
       if (registerResponse.success) {
         setReferenceId(registerResponse.fileData!.referenceId)
+        if (
+          registerResponse.fileData!.transactionId &&
+          registerResponse.fileData!.transactionId !== ''
+        ) {
+          setTransactionId(registerResponse.fileData!.transactionId)
+        }
+      }
+
+      if (registerResponse.message) {
+        setErrorMessage(registerResponse.message)
       }
 
       fileFormik.resetForm()
@@ -93,7 +102,11 @@ export default function Files() {
         ) : null}
         {success ? (
           <div className="w-4/5 flex flex-col items-center justify-center text-bold text-lg mt-4">
-            <div className="mb-4">Arquivo registrado com sucesso.</div>
+            {errorMessage !== '' ? (
+              <div className="mb-4">Arquivo registrado com erros.</div>
+            ) : (
+              <div className="mb-4">Arquivo registrado com sucesso.</div>
+            )}
             <div>Identificador de referência:</div>
             <div className="text-bold text-sm mb-4 w-80 overflow-auto flex items-center justify-center">
               {referenceId}
@@ -101,9 +114,7 @@ export default function Files() {
             {transactionId !== '' ? (
               <>
                 <div>Transação de Assinatura: </div>
-                <div className="text-bold text-sm mb-4">
-                  0x50170c2188f63cb0b8b0959d5e6a4490e1f442b5137bb608ac34c19574855e7a
-                </div>
+                <div className="text-bold text-sm mb-4">{transactionId}</div>
               </>
             ) : null}
           </div>

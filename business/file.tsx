@@ -68,10 +68,8 @@ export async function registerFile(
       method: 'PUT',
     })
 
-    console.log('This is signature response: ', signatureResponse)
-
     if (signatureResponse.status >= 200 && signatureResponse.status <= 299) {
-      a.fileData.transactionId = 'something should be put here'
+      a.fileData.transactionId = signatureResponse.data.transaction_hash
     } else {
       a.fileData.transactionId = ''
       a.message = `Some error ocurred: ${signatureResponse.data.error}`
