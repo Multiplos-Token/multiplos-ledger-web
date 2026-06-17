@@ -2,13 +2,32 @@
 
 import { useState, useEffect } from 'react'
 import { listUserFiles } from '@/business/file'
+import {
+  Button,
+  Tooltip,
+  Dialog,
+  DialogTrigger,
+  DialogSurface,
+  DialogTitle,
+  DialogBody,
+  DialogActions,
+  DialogContent,
+  useRestoreFocusTarget,
+  Input,
+  Spinner,
+} from '@fluentui/react-components'
+import { DocumentRegular } from '@fluentui/react-icons'
 
 export default function Files() {
+  const restoreFocusTargetAttribute = useRestoreFocusTarget()
+
+  const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [fileData, setFileData] = useState<Array<any>>([])
 
   const executeLoading = async () => {
     const files = await listUserFiles()
+    console.log('Returned data from Backend: ', files)
     if (files.success) {
       setFileData(files.userData as Array<any>)
     }
@@ -50,13 +69,53 @@ export default function Files() {
                   <td className="pb-2">
                     <div className="truncate w-80">{v.reference_id}</div>
                   </td>
-                  <td className="pb-2">...</td>
+                  <td className="pb-2">
+                    <Tooltip content="Detalhes do Arquivo" relationship="label">
+                      <Button
+                        icon={<DocumentRegular />}
+                        {...restoreFocusTargetAttribute}
+                        onClick={() => {
+                          setOpen(true)
+                        }}
+                      />
+                    </Tooltip>
+                  </td>
                 </tr>
               )
             })
           })()}
         </tbody>
       </table>
+      <Dialog
+        // this controls the dialog open state
+        open={open}
+        onOpenChange={(event, data) => {
+          setOpen(data.open)
+        }}
+      >
+        <DialogSurface>
+          <DialogBody>
+            <DialogTitle>Detalhes do Arquivo</DialogTitle>
+            <DialogContent>Present file details here</DialogContent>
+            <DialogActions>
+              <Button
+                appearance="primary"
+                disabled={false}
+                onClick={async () => {
+                  setOpen(false)
+                }}
+              >
+                Assinar!{false ? <Spinner size="tiny" /> : null}
+              </Button>
+              <DialogTrigger disableButtonEnhancement>
+                <Button appearance="secondary" disabled={false}>
+                  Fechar
+                </Button>
+              </DialogTrigger>
+            </DialogActions>
+          </DialogBody>
+        </DialogSurface>
+      </Dialog>
     </div>
   )
 }

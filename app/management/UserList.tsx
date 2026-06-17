@@ -95,7 +95,6 @@ export default function UserList({ data }: { data: Array<any> }) {
                         icon={<MoneyRegular />}
                         {...restoreFocusTargetAttribute}
                         onClick={() => {
-                          // it is the user responsibility to open the dialog
                           setCurrentDialogUserName(d.name)
                           setCurrentDialogUserIndex(i)
                           setOpen(true)
@@ -114,7 +113,6 @@ export default function UserList({ data }: { data: Array<any> }) {
         // this controls the dialog open state
         open={open}
         onOpenChange={(event, data) => {
-          // it is the users responsibility to react accordingly to the open state change
           if (!depositSubmitting) {
             setOpen(data.open)
             setCurrentDialogUserName(null)
