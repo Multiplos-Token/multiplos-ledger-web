@@ -111,15 +111,21 @@ export default function Files() {
               <div className="flex">
                 <div className="flex grow flex-col items-stretch mb-8">
                   <div className="font-bold">Nome:</div>
-                  <div className="w-full overflow-auto">1</div>
+                  <div className="w-full overflow-auto">
+                    {currentFile?.name}
+                  </div>
                 </div>
                 <div className="flex grow flex-col items-stretch mb-8">
                   <div className="font-bold">Tipo (mime):</div>
-                  <div className="w-full overflow-auto">2</div>
+                  <div className="w-full overflow-auto">
+                    {currentFile?.mime_type}
+                  </div>
                 </div>
                 <div className="flex grow flex-col items-stretch mb-8">
                   <div className="font-bold">Publicado:</div>
-                  <div className="w-full overflow-auto">3</div>
+                  <div className="w-full overflow-auto">
+                    {currentFile?.public ? 'sim' : 'não'}
+                  </div>
                 </div>
               </div>
             </DialogContent>
