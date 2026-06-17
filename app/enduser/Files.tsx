@@ -25,6 +25,8 @@ export default function Files() {
   const [loading, setLoading] = useState(true)
   const [fileData, setFileData] = useState<Array<any>>([])
   const [currentFile, setCurrentFile] = useState<any | null>(null)
+  const [infoSuccess, setInfoSuccess] = useState(false)
+  const [infoData, setInfoData] = useState<any | null>(null)
 
   const executeLoading = async () => {
     const files = await listUserFiles()
@@ -46,6 +48,12 @@ export default function Files() {
 
   const loadFileData = async (f: any) => {
     const finfo = await loadFileInfo(f.reference_id)
+    setInfoSuccess(finfo.success)
+    if (finfo.success) {
+      setInfoData(finfo.userData)
+    } else {
+      setInfoData(null)
+    }
     setCurrentFile(f)
     setOpen(true)
   }
@@ -96,13 +104,14 @@ export default function Files() {
         onOpenChange={(event, data) => {
           setOpen(data.open)
           setCurrentFile(null)
+          setInfoData(null)
         }}
       >
         <DialogSurface>
           <DialogBody>
             <DialogTitle>Detalhes do Arquivo</DialogTitle>
             <DialogContent>
-              <div className="flex flex-col items-stretch mb-8">
+              <div className="flex flex-col items-stretch mb-4">
                 <div className="font-bold">Identificador de Referência:</div>
                 <div className="w-full overflow-auto">
                   {currentFile?.reference_id}
@@ -128,18 +137,74 @@ export default function Files() {
                   </div>
                 </div>
               </div>
+              {infoSuccess ? (
+                <div className="flex items-stretch flex-col mb-4">
+                  <div className="text-lg font-bold">Assinatura digital:</div>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td className="font-bold">Responsável</td>
+                        <td>{infoData?.owner_user_name}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">Nome Completo</td>
+                        <td>{infoData?.owner_masked_full_name}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">E-mail</td>
+                        <td>{infoData?.owner_masked_email}</td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">MD5-Sum</td>
+                        <td>
+                          <div className="w-80 overflow-auto">
+                            {infoData?.md5}
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">SHA2-Sum</td>
+                        <td>
+                          <div className="w-80 overflow-auto">
+                            {infoData?.sha2}
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">SHA3-Sum</td>
+                        <td>
+                          <div className="w-80 overflow-auto">
+                            {infoData?.sha3}
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="font-bold">Transação</td>
+                        <td>
+                          <div className="w-80 overflow-auto">
+                            {infoData?.transaction_hash}
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              ) : null}
             </DialogContent>
             <DialogActions>
-              <Button
-                appearance="primary"
-                disabled={false}
-                onClick={async () => {
-                  setOpen(false)
-                  setCurrentFile(null)
-                }}
-              >
-                Assinar!{false ? <Spinner size="tiny" /> : null}
-              </Button>
+              {!infoSuccess ? (
+                <Button
+                  appearance="primary"
+                  disabled={false}
+                  onClick={async () => {
+                    setOpen(false)
+                    setCurrentFile(null)
+                    setInfoData(null)
+                  }}
+                >
+                  Assinar!{false ? <Spinner size="tiny" /> : null}
+                </Button>
+              ) : null}
               <DialogTrigger disableButtonEnhancement>
                 <Button appearance="secondary" disabled={false}>
                   Fechar

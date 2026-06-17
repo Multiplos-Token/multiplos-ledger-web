@@ -276,18 +276,12 @@ export async function loadFileInfo(
     method: 'POST',
   })
 
-  console.log('Chegou aqui!!!')
-
   a.success = response.status >= 200 && response.status <= 299
   if (a.success) {
     a.userData = response.data as Array<any>
   } else {
     a.message = `Erro: ${response.data.error}`
   }
-
-  console.log('Chegou aqui também!!!')
-
-  console.log('Valor de a: ', a)
 
   return a
 }
