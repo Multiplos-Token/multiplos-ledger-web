@@ -64,6 +64,20 @@ export default function TopMenu({
       >
         Arquivos
       </Button>
+      <Button
+        shape="square"
+        icon={<ArchiveRegular />}
+        appearance={selected == 'verification' ? 'outline' : 'subtle'}
+        onClick={() => {
+          setSelected('verification')
+          if (onSelect) {
+            onSelect('verification')
+          }
+        }}
+      >
+        Verificar
+      </Button>
+
       {isUserSystemManager ? (
         <Button
           shape="square"

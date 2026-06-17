@@ -6,6 +6,7 @@ import TopMenu from './TopMenu'
 import Files from './Files'
 import Register from './Register'
 import User from './User'
+import Verification from './Verification'
 
 export default function Home() {
   const [selected, setSelected] = useState('register')
@@ -32,6 +33,13 @@ export default function Home() {
                 <User />
               </div>
             )
+          case 'verification':
+            return (
+              <div className="grow flex items-center justify-center">
+                <Verification />
+              </div>
+            )
+
           default:
             return null
         }

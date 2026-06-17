@@ -307,3 +307,27 @@ export async function signFile(
 
   return a
 }
+
+export async function verifyFile(file: File): Promise<SimpleUserResponseT> {
+  let a = {} as SimpleUserResponseT
+
+  const verificationResponse = await c({
+    path: '/ledger-management/api/user/ledger/document_info_from_hashes',
+    method: 'POST',
+    body: {
+      MD5: await fileMD5Sum(file),
+      SHA2: await fileSHA2Sum256(file),
+      SHA3: await fileSHA3Sum256(file),
+    },
+  })
+
+  a.success =
+    verificationResponse.status >= 200 && verificationResponse.status <= 299
+
+  if (a.success) {
+    a.userData = verificationResponse.data
+  } else {
+    a.message = `Unable to verify document: ${verificationResponse.data.error}`
+  }
+  return a
+}
