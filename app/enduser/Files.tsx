@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { listUserFiles } from '@/business/file'
+import { listUserFiles, loadFileInfo } from '@/business/file'
 import {
   Button,
   Tooltip,
@@ -24,10 +24,10 @@ export default function Files() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(true)
   const [fileData, setFileData] = useState<Array<any>>([])
+  const [currentFile, setCurrentFile] = useState<any | null>(null)
 
   const executeLoading = async () => {
     const files = await listUserFiles()
-    console.log('Returned data from Backend: ', files)
     if (files.success) {
       setFileData(files.userData as Array<any>)
     }
@@ -44,7 +44,11 @@ export default function Files() {
     )
   }
 
-  console.log('Files: ', fileData)
+  const loadFileData = async (f: any) => {
+    const finfo = await loadFileInfo(f.reference_id)
+    setCurrentFile(f)
+    setOpen(true)
+  }
 
   return (
     <div className="flex grow flex-col items-stretch">
@@ -75,7 +79,7 @@ export default function Files() {
                         icon={<DocumentRegular />}
                         {...restoreFocusTargetAttribute}
                         onClick={() => {
-                          setOpen(true)
+                          loadFileData(v)
                         }}
                       />
                     </Tooltip>
@@ -91,18 +95,41 @@ export default function Files() {
         open={open}
         onOpenChange={(event, data) => {
           setOpen(data.open)
+          setCurrentFile(null)
         }}
       >
         <DialogSurface>
           <DialogBody>
             <DialogTitle>Detalhes do Arquivo</DialogTitle>
-            <DialogContent>Present file details here</DialogContent>
+            <DialogContent>
+              <div className="flex flex-col items-stretch mb-8">
+                <div className="font-bold">Identificador de Referência:</div>
+                <div className="w-full overflow-auto">
+                  {currentFile?.reference_id}
+                </div>
+              </div>
+              <div className="flex">
+                <div className="flex grow flex-col items-stretch mb-8">
+                  <div className="font-bold">Nome:</div>
+                  <div className="w-full overflow-auto">1</div>
+                </div>
+                <div className="flex grow flex-col items-stretch mb-8">
+                  <div className="font-bold">Tipo (mime):</div>
+                  <div className="w-full overflow-auto">2</div>
+                </div>
+                <div className="flex grow flex-col items-stretch mb-8">
+                  <div className="font-bold">Publicado:</div>
+                  <div className="w-full overflow-auto">3</div>
+                </div>
+              </div>
+            </DialogContent>
             <DialogActions>
               <Button
                 appearance="primary"
                 disabled={false}
                 onClick={async () => {
                   setOpen(false)
+                  setCurrentFile(null)
                 }}
               >
                 Assinar!{false ? <Spinner size="tiny" /> : null}

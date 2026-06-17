@@ -3,7 +3,7 @@ import base85 from '@alttiri/base85'
 import { md5, sha256, sha3 } from 'hash-wasm'
 
 import { c } from '@/util/ClientHost'
-import { UserResponseT } from './system'
+import { UserResponseT, SimpleUserResponseT } from './system'
 
 // Enable global Buffer polyfill:
 if (typeof window !== 'undefined') {
@@ -262,6 +262,32 @@ export async function listUserFiles(): Promise<UserResponseT> {
   } else {
     a.message = `Erro: ${response.data.error}`
   }
+
+  return a
+}
+
+export async function loadFileInfo(
+  referenceId: string
+): Promise<SimpleUserResponseT> {
+  let a = {} as SimpleUserResponseT
+
+  const response = await c({
+    path: `/ledger-management/api/user/ledger/document/${referenceId}/info`,
+    method: 'POST',
+  })
+
+  console.log('Chegou aqui!!!')
+
+  a.success = response.status >= 200 && response.status <= 299
+  if (a.success) {
+    a.userData = response.data as Array<any>
+  } else {
+    a.message = `Erro: ${response.data.error}`
+  }
+
+  console.log('Chegou aqui também!!!')
+
+  console.log('Valor de a: ', a)
 
   return a
 }
