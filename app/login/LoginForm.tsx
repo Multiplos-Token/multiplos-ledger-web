@@ -40,7 +40,6 @@ export default function Home() {
     },
     onSubmit: async (values) => {
       setWait(true)
-      console.log('Login values: ', values)
       const status = await userLogin(values)
       setWait(false)
       if (status.success) {

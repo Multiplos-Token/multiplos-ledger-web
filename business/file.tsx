@@ -285,3 +285,25 @@ export async function loadFileInfo(
 
   return a
 }
+
+export async function signFile(
+  referenceId: string
+): Promise<SimpleUserResponseT> {
+  let a = {} as SimpleUserResponseT
+
+  const signatureResponse = await c({
+    path: `/ledger-management/api/user/ledger/assign_document/${referenceId}`,
+    method: 'PUT',
+  })
+
+  a.success = signatureResponse.status >= 200 && signatureResponse.status <= 299
+
+  if (a.success) {
+    a.userData = signatureResponse.data.transaction_hash
+  } else {
+    a.userData = ''
+    a.message = `Some error ocurred: ${signatureResponse.data.error}`
+  }
+
+  return a
+}

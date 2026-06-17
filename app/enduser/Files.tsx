@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { listUserFiles, loadFileInfo } from '@/business/file'
+import { listUserFiles, loadFileInfo, signFile } from '@/business/file'
 import {
   Button,
   Tooltip,
@@ -27,6 +27,8 @@ export default function Files() {
   const [currentFile, setCurrentFile] = useState<any | null>(null)
   const [infoSuccess, setInfoSuccess] = useState(false)
   const [infoData, setInfoData] = useState<any | null>(null)
+  const [signingSubmitting, setSigningSubmitting] = useState(false)
+  const [signingError, setSigningError] = useState('')
 
   const executeLoading = async () => {
     const files = await listUserFiles()
@@ -102,9 +104,11 @@ export default function Files() {
         // this controls the dialog open state
         open={open}
         onOpenChange={(event, data) => {
-          setOpen(data.open)
-          setCurrentFile(null)
-          setInfoData(null)
+          if (!signingSubmitting) {
+            setOpen(data.open)
+            setCurrentFile(null)
+            setInfoData(null)
+          }
         }}
       >
         <DialogSurface>
@@ -137,6 +141,9 @@ export default function Files() {
                   </div>
                 </div>
               </div>
+              {signingError !== '' ? (
+                <div className="text-red-500">{signingError}</div>
+              ) : null}
               {infoSuccess ? (
                 <div className="flex items-stretch flex-col mb-4">
                   <div className="text-lg font-bold">Assinatura digital:</div>
@@ -195,18 +202,28 @@ export default function Files() {
               {!infoSuccess ? (
                 <Button
                   appearance="primary"
-                  disabled={false}
                   onClick={async () => {
-                    setOpen(false)
-                    setCurrentFile(null)
-                    setInfoData(null)
+                    setSigningSubmitting(true)
+                    const signingResponse = await signFile(
+                      currentFile?.reference_id
+                    )
+                    if (signingResponse.success) {
+                      setOpen(false)
+                      setCurrentFile(null)
+                      setInfoData(null)
+                      setSigningError('')
+                    } else {
+                      setSigningError(signingResponse?.message ?? '')
+                    }
+                    setSigningSubmitting(false)
                   }}
+                  disabled={signingSubmitting}
                 >
-                  Assinar!{false ? <Spinner size="tiny" /> : null}
+                  Assinar!{signingSubmitting ? <Spinner size="tiny" /> : null}
                 </Button>
               ) : null}
               <DialogTrigger disableButtonEnhancement>
-                <Button appearance="secondary" disabled={false}>
+                <Button appearance="secondary" disabled={signingSubmitting}>
                   Fechar
                 </Button>
               </DialogTrigger>
