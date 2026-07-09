@@ -30,7 +30,7 @@ export async function POST(request: Request) {
     value: data.access_token,
     httpOnly: true,
     sameSite: 'strict',
-    // secure: process.env.NODE_ENV !== 'development',
+    secure: process.env.NODE_ENV !== 'development',
   })
 
   return Response.json(data)
