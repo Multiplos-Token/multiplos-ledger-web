@@ -29,7 +29,8 @@ export async function POST(request: Request) {
     name: 'btoken_access_token',
     value: data.access_token,
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    // sameSite: 'strict',
+    // secure: process.env.NODE_ENV === 'production',
   })
 
   return Response.json(data)
