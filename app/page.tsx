@@ -14,11 +14,10 @@ export default function Home() {
         backgroundPosition: 'center',
       }}
     >
-      <div className="bg-logo-secondary h-16 min-h-16 self-stretch">
-        this is a test
-      </div>
-      <div className="bg-logo-primary h-154 min-h-154 self-stretch">
-        this is a test
+      <div className="bg-logo-secondary h-16 min-h-16 self-stretch"></div>
+      <div className="bg-logo-primary h-154 min-h-154 self-stretch flex">
+        <div className="grow-2 text-white">kakaka</div>
+        <div className="grow-1 text-white">kakakak</div>
       </div>
       <div className="bg-white h-96 min-h-96 self-stretch">this is a test</div>
       <div className="bg-logo-primary h-96 min-h-96 self-stretch">
