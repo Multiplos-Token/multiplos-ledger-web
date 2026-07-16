@@ -1,6 +1,7 @@
 import { Button } from '@fluentui/react-components'
-import { Button as AButton, Space } from 'antd'
 import Link from 'next/link'
+import Menu from '@/components/menu'
+import Footer from '@/components/footer'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
@@ -14,9 +15,7 @@ export default function Home() {
         backgroundPosition: 'center',
       }}
     >
-      <div className="bg-logo-secondary h-16 min-h-16 self-stretch">
-        contempt for human rights have resulted
-      </div>
+      <Menu />
       <div className="bg-logo-primary h-178 min-h-178 self-stretch flex relative">
         <div className="grow-3"></div>
         <div
@@ -65,9 +64,7 @@ export default function Home() {
           contempt for human rights have resulted
         </div>
       </div>
-      <div className="bg-logo-secondary h-48 min-h-48 self-stretch">
-        contempt for human rights have resulted
-      </div>
+      <Footer />
       {
         // <div className="text-3xl">BToken Ledger</div>
         // <div>
