@@ -27,24 +27,24 @@ export default function Home() {
             backgroundPosition: 'center',
           }}
         ></div>
-        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-white">
+        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-background">
           contempt for human rights have resulted
         </div>
       </div>
-      <div className="bg-white h-96 min-h-96 self-stretch">
+      <div className="bg-background h-96 min-h-96 self-stretch">
         contempt for human rights have resulted
       </div>
       <div className="bg-logo-primary h-96 min-h-96 self-stretch flex relative">
         <div
-          className="grow-1 text-white"
+          className="grow-1 text-background"
           style={{
             backgroundImage: `linear-gradient(to right, rgba(24, 42, 85, 0.8), rgba(24, 42, 85, 1)), url('${basePath}/c.webp')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         ></div>
-        <div className="grow-2 text-white"></div>
-        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-white">
+        <div className="grow-2 text-background"></div>
+        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-background">
           contempt for human rights have resulted
         </div>
       </div>
@@ -53,15 +53,15 @@ export default function Home() {
       </div>
       <div className="bg-logo-primary h-130 min-h-130 self-stretch flex relative">
         <div
-          className="grow-1 text-white"
+          className="grow-1 text-background"
           style={{
             backgroundImage: `linear-gradient(to right, rgba(24, 42, 85, 0.8), rgba(24, 42, 85, 1)), url('${basePath}/s.webp')`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
         ></div>
-        <div className="grow-2 text-white"></div>
-        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-white">
+        <div className="grow-2 text-background"></div>
+        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-background">
           contempt for human rights have resulted
         </div>
       </div>
