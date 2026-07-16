@@ -14,8 +14,10 @@ export default function Home() {
         backgroundPosition: 'center',
       }}
     >
-      <div className="bg-logo-secondary h-16 min-h-16 self-stretch">Header</div>
-      <div className="bg-logo-primary h-178 min-h-178 self-stretch flex">
+      <div className="bg-logo-secondary h-16 min-h-16 self-stretch">
+        contempt for human rights have resulted
+      </div>
+      <div className="bg-logo-primary h-178 min-h-178 self-stretch flex relative">
         <div className="grow-3"></div>
         <div
           className="grow-1"
@@ -25,9 +27,14 @@ export default function Home() {
             backgroundPosition: 'center',
           }}
         ></div>
+        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-white">
+          contempt for human rights have resulted
+        </div>
       </div>
-      <div className="bg-white h-96 min-h-96 self-stretch">this is a test</div>
-      <div className="bg-logo-primary h-96 min-h-96 self-stretch flex">
+      <div className="bg-white h-96 min-h-96 self-stretch">
+        contempt for human rights have resulted
+      </div>
+      <div className="bg-logo-primary h-96 min-h-96 self-stretch flex relative">
         <div
           className="grow-1 text-white"
           style={{
@@ -37,9 +44,14 @@ export default function Home() {
           }}
         ></div>
         <div className="grow-2 text-white"></div>
+        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-white">
+          contempt for human rights have resulted
+        </div>
       </div>
-      <div className="h-178 min-h-178 self-stretch">this is a test</div>
-      <div className="bg-logo-primary h-130 min-h-130 self-stretch flex">
+      <div className="h-178 min-h-178 self-stretch">
+        contempt for human rights have resulted
+      </div>
+      <div className="bg-logo-primary h-130 min-h-130 self-stretch flex relative">
         <div
           className="grow-1 text-white"
           style={{
@@ -49,8 +61,13 @@ export default function Home() {
           }}
         ></div>
         <div className="grow-2 text-white"></div>
+        <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-white">
+          contempt for human rights have resulted
+        </div>
       </div>
-      <div className="bg-logo-secondary h-48 min-h-48 self-stretch">footer</div>
+      <div className="bg-logo-secondary h-48 min-h-48 self-stretch">
+        contempt for human rights have resulted
+      </div>
       {
         // <div className="text-3xl">BToken Ledger</div>
         // <div>
