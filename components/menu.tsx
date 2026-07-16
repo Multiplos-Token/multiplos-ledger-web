@@ -11,7 +11,14 @@ export default function Menu({}) {
         alt="btoken"
         width={192}
         height={64}
-        className="ml-2"
+        className="ml-2 hidden sm:block"
+      />
+      <Image
+        src="/home/logo-btoken.svg"
+        alt="btoken"
+        width={96}
+        height={32}
+        className="ml-2 sm:hidden"
       />
       <div className="grow-1" />
       <div className="flex items-center justify-center mr-2 gap-2">
