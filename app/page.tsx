@@ -6,6 +6,7 @@ import {
   MoneyRegular,
   CalendarArrowCounterclockwiseRegular,
   FingerprintRegular,
+  StarRegular,
 } from '@fluentui/react-icons'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -161,16 +162,57 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="h-178 min-h-178 self-stretch flex flex-col justify-center p-8">
-        <div className="bg-white p-8 rounded opacity-85 flex">
-          <div className="grow">lalala</div>
-          <div className="flex-1 md:w-1/3">
+      <div className="h-fit min-h-fit self-stretch flex flex-col justify-center p-8 md:pt-16 md:pb-16 md:pl-8 md:pr-8">
+        <div className="bg-white p-8 rounded opacity-75 flex flex-col lg:flex-row">
+          <div className="flex-1 lg:w-1/3 lg:min-w-1/3 flex items-center justify-center">
             <Image
               src={`${basePath}/architecture.webp`}
-              width={500}
-              height={500}
+              width={600}
+              height={600}
               alt="arquitetura segura"
             />
+          </div>
+          <div className="grow-1 md:mr-4 flex flex-col mt-4 lg:ml-4 text-logo-primary">
+            <div className="text-logo-secondary self-stretch text-2xl md:text-5xl mb-8 md:mb-16">
+              Arquitetura Técnica e Segurança
+            </div>
+            <div className="self-stretch text-lg md:text-2xl">
+              A <b>Btoken</b> hospeda seus sistemas em um ambiente altamente
+              seguro, com várias barreiras para inibir qualquer tipo de
+              vazamento de dados ou entradas não autorizadas, com as seguintes
+              características:
+            </div>
+            <div className="self-stretch sm:text-lg md:text-2xl ml-4 md:ml-16 flex items-center">
+              <StarRegular className="text-5xl text-logo-secondary mr-4 min-w-16" />
+              <div>
+                Toda comunicação externa e interna mediada por SSL, mantendo uma
+                estrutura fechada.
+              </div>
+            </div>
+            <div className="self-stretch sm:text-lg md:text-2xl ml-4 md:ml-16 flex items-center">
+              <StarRegular className="text-5xl text-logo-secondary mr-4 min-w-16" />
+              <div>Todos os bancos de dados são totalmente encriptados.</div>
+            </div>
+            <div className="self-stretch sm:text-lg md:text-2xl ml-4 md:ml-16 flex items-center">
+              <StarRegular className="text-5xl text-logo-secondary mr-4 min-w-16" />
+              <div>
+                Os sistemas-operacionais são encriptados em memória, através de
+                configurações de hardware.
+              </div>
+            </div>
+            <div className="self-stretch sm:text-lg md:text-2xl ml-4 md:ml-16 flex items-center">
+              <StarRegular className="text-5xl text-logo-secondary mr-4 min-w-16" />
+              <div>
+                Dados em <i>cloud</i> possuem um segundo adicional de
+                criptografia usuário a usuário.
+              </div>
+            </div>
+            <div className="self-stretch sm:text-lg md:text-2xl ml-4 md:ml-16 flex items-center">
+              <StarRegular className="text-5xl text-logo-secondary mr-4 min-w-16" />
+              <div>
+                Chaves de segurança armazenadas em <i>wallets offline</i>.
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -185,7 +227,31 @@ export default function Home() {
         ></div>
         <div className="grow-2 text-background"></div>
         <div className="absolute top-0 right-0 bottom-0 left-0 flex items-center justify-center text-background">
-          contempt for human rights have resulted
+          <div className="absolute top-0 right-0 bottom-0 left-0 flex flex-col items-center justify-left text-background m-8 gap-2 md:gap-8">
+            <div className="text-logo-secondary self-stretch text-2xl md:text-5xl">
+              Parceria e Integrações:
+            </div>
+            <div className="grow-1" />
+            <div className="self-stretch text-lg md:text-2xl">
+              A <b>Btoken</b> não é apenas uma ferramenta de registro de
+              documentos, nós também oferecemos uma{' '}
+              <Link className="font-bold" href="/docs">
+                API completa
+              </Link>{' '}
+              para que você possa integrar os seus sistemas a nós.
+            </div>
+            <div className="self-stretch text-lg md:text-2xl">
+              Além disso, se você quiser, ativamente, promover nossas soluções,
+              podemos abrir uma parceria comissionada, que permite a
+              participação da sua empresa em novos negócios da <b>BToken</b>.
+            </div>
+            <div className="self-stretch text-lg md:text-2xl">
+              <Link className="font-bold" href="/contato">
+                Fale conosco!
+              </Link>
+            </div>
+            <div className="grow-1" />
+          </div>
         </div>
       </div>
       <Footer />
