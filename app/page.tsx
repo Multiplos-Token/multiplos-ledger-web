@@ -127,7 +127,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="bg-logo-primary h-96 min-h-96 self-stretch flex relative">
+      <div className="bg-logo-primary h-130 min-h-130 self-stretch flex relative">
         <div
           className="grow-1 text-background"
           style={{
@@ -143,12 +143,11 @@ export default function Home() {
               Impactos Legais do Selo de Timestamp
             </div>
             <div className="grow-1" />
-            <div>
-              O registro de ativos digitais na Blockchain possui valor jurídica,
-              porque a Blockchain funciona é registro confiável, confirmado
-              eletrônicamente por diversos de nós de computação, testemunhas
-              digitais da existência do documento registrado em um determinado
-              momento do tempo.
+            <div className="self-stretch text-lg md:text-2xl">
+              O registro de ativos digitais na Blockchain possui valor jurídico,
+              porque a Blockchain funciona cadastrando dados eletrônicamente por
+              diversos de nós de computação, testemunhas digitais da existência
+              do documento em um determinado momento do tempo.
             </div>
             <div className="grow-1" />
           </div>
@@ -162,8 +161,18 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="h-178 min-h-178 self-stretch">
-        contempt for human rights have resulted
+      <div className="h-178 min-h-178 self-stretch flex flex-col justify-center p-8">
+        <div className="bg-white p-8 rounded opacity-85 flex">
+          <div className="grow">lalala</div>
+          <div className="flex-1 md:w-1/3">
+            <Image
+              src={`${basePath}/architecture.webp`}
+              width={500}
+              height={500}
+              alt="arquitetura segura"
+            />
+          </div>
+        </div>
       </div>
       <div className="bg-logo-primary h-130 min-h-130 self-stretch flex relative">
         <div
