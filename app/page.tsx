@@ -44,9 +44,9 @@ export default function Home() {
           <div className="self-stretch text-lg md:text-2xl">
             A <b>Btoken</b> oferece soluções de confiabilidade digital, baseadas
             na Tecnologia Blockchain, em{' '}
-            <Link className="font-bold" href="/">
+            <a className="font-bold" href="#environment">
               ambiente de alta segurança
-            </Link>
+            </a>
             , para que você possa:
           </div>
           <div className="self-stretch sm:text-lg md:text-2xl ml-4 md:ml-16 flex items-center">
@@ -181,7 +181,10 @@ export default function Home() {
             />
           </div>
           <div className="grow-1 md:mr-4 flex flex-col mt-4 lg:ml-4 text-logo-primary">
-            <div className="text-logo-secondary self-stretch text-2xl md:text-5xl mb-8 md:mb-16">
+            <div
+              id="environment"
+              className="text-logo-secondary self-stretch text-2xl md:text-5xl mb-8 md:mb-16"
+            >
               Arquitetura Técnica e Segurança
             </div>
             <div className="self-stretch text-lg md:text-2xl">
@@ -254,7 +257,7 @@ export default function Home() {
               participação da sua empresa em novos negócios da <b>BToken</b>.
             </div>
             <div className="self-stretch text-lg md:text-2xl">
-              <Link className="font-bold" href="/contato">
+              <Link className="font-bold" href="/contact">
                 Fale conosco!
               </Link>
             </div>
