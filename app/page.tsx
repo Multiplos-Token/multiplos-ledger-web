@@ -128,7 +128,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="bg-logo-primary h-130 min-h-130 self-stretch flex relative">
+      <div className="bg-logo-primary h-114 min-h-114 self-stretch flex relative">
         <div
           className="grow-1 text-background"
           style={{
@@ -144,20 +144,28 @@ export default function Home() {
               Impactos Legais do Selo de Timestamp
             </div>
             <div className="grow-1" />
-            <div className="self-stretch text-lg md:text-2xl">
+            <div className="self-stretch sm:text-lg md:text-2xl">
               O registro de ativos digitais na Blockchain possui valor jurídico,
               porque a Blockchain funciona cadastrando dados eletrônicamente por
-              diversos de nós de computação, testemunhas digitais da existência
-              do documento em um determinado momento do tempo.
+              diversos nós de computação, testemunhas digitais da existência do
+              documento em um determinado momento do tempo.
             </div>
             <div className="grow-1" />
           </div>
-          <div className="self-stretch min-w-48 flex flex-col items-center justify-start">
+          <div className="self-stretch min-w-24 md:min-w-48 flex flex-col items-center justify-start">
             <Image
               src={`${basePath}/legal-impact.svg`}
               width={175}
               height={204}
               alt="ledger passo 3"
+              className="hidden md:block"
+            />
+            <Image
+              src={`${basePath}/legal-impact.svg`}
+              width={100}
+              height={116}
+              alt="ledger passo 3"
+              className="md:hidden"
             />
           </div>
         </div>
@@ -235,9 +243,9 @@ export default function Home() {
             <div className="self-stretch text-lg md:text-2xl">
               A <b>Btoken</b> não é apenas uma ferramenta de registro de
               documentos, nós também oferecemos uma{' '}
-              <Link className="font-bold" href="/docs">
+              <a className="font-bold" href="/docs">
                 API completa
-              </Link>{' '}
+              </a>{' '}
               para que você possa integrar os seus sistemas a nós.
             </div>
             <div className="self-stretch text-lg md:text-2xl">
@@ -255,21 +263,6 @@ export default function Home() {
         </div>
       </div>
       <Footer />
-      {
-        // <div className="text-3xl">BToken Ledger</div>
-        // <div>
-        //   Registre seus documentos:{' '}
-        //   <Link className="font-bold" href="/login">
-        //     login
-        //   </Link>
-        // </div>
-        // <div>
-        //   Não possui conta:{' '}
-        //   <Link className="font-bold" href="/signup">
-        //     inscreva-se
-        //   </Link>
-        // </div>
-      }
     </div>
   )
 }
