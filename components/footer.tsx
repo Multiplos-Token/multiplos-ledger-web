@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Footer({}) {
+export default function Footer({ logged = false }: { logged?: boolean }) {
   return (
     <div className="bg-background h-fit min-h-fit self-stretch flex flex-col md:flex-row items-center p-8">
       <div className="self-stretch mb-4 md:mb-0 md:mr-8 flex flex-col">
@@ -24,16 +24,20 @@ export default function Footer({}) {
       </div>
       <div className="grow-1 mb-4 md:mb-0">
         <ul>
-          <li>
-            <Link className="font-bold" href="/login">
-              Login
-            </Link>
-          </li>
-          <li>
-            <Link className="font-bold" href="/signup">
-              Cadastro
-            </Link>
-          </li>
+          {!logged ? (
+            <>
+              <li>
+                <Link className="font-bold" href="/login">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link className="font-bold" href="/signup">
+                  Cadastro
+                </Link>
+              </li>
+            </>
+          ) : null}
           <li>
             <Link className="font-bold" href="/about">
               Sobre nós
