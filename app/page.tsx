@@ -25,7 +25,7 @@ export default function Home() {
         backgroundPosition: 'center',
       }}
     >
-      <Menu />
+      <Menu logged={false} />
       <div className="bg-logo-primary h-178 min-h-178 self-stretch flex relative">
         <div className="grow-3"></div>
         <div
@@ -265,7 +265,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <Footer />
+      <Footer logged={false} />
     </div>
   )
 }

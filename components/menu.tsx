@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
-export default function Menu({ logged = false }: { logged?: boolean }) {
+export default function Menu({ logged = true }: { logged?: boolean }) {
   return (
     <div className="bg-background h-16 min-h-16 self-stretch flex">
       <div className="self-stretch flex flex-col">

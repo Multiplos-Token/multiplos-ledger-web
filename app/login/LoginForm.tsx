@@ -51,10 +51,10 @@ export default function Home() {
     validationSchema: loginValidationSchema,
   })
   return (
-    <div className="flex flex-col h-dvh w-dvw overflow-y-auto overflow-x-hidden">
+    <div className="flex flex-col self-stretch grow-1 min-h-fit">
       <div className="grow" />
       <form
-        className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit w-dvw"
+        className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit"
         onSubmit={loginFormik.handleSubmit}
       >
         <div className="text-2xl">Login:</div>
