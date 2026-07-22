@@ -362,7 +362,7 @@ export default function Home() {
               <p>{serverErrorMessage}</p>
             </div>
           ) : null}
-          <div className="flex flex-col items-center justify-center">
+          <div className="flex flex-col items-start justify-center m-8 gap-4">
             <div>
               Caro(a), <b>{submittedUserName}</b>, verifique o seu e-mail.
             </div>
