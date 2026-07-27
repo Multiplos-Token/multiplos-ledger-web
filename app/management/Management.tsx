@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation'
 
 import { verifyUserSystemManager } from '@/business/user'
 import { loadAllUsers } from '@/business/system'
+import Menu from '@/components/menu'
+import Footer from '@/components/footer'
 import TopMenu from './TopMenu'
 import UserList from './UserList'
 
@@ -29,6 +31,7 @@ export default function Management() {
 
   return initialized ? (
     <div className="flex flex-col h-dvh w-dvw overflow-y-auto overflow-x-hidden">
+      <Menu />
       <TopMenu
         onSelect={(s) => {
           if (s === 'panel') {
@@ -37,8 +40,15 @@ export default function Management() {
         }}
       />
       <UserList data={users} />
+      <Footer />
     </div>
   ) : (
-    <div className="flex min-h-full flex-col w-dvw">Carregando...</div>
+    <div className="flex min-h-full flex-col w-dvw">
+      <Menu />
+      <div className="grow-1 self-stretch flex justify-center items-center">
+        Carregando...
+      </div>
+      <Footer />
+    </div>
   )
 }
