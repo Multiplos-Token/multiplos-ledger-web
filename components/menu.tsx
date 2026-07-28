@@ -13,7 +13,11 @@ import {
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { Navigation48Regular, Navigation24Regular } from '@fluentui/react-icons'
+import {
+  Navigation48Regular,
+  Navigation24Regular,
+  Dismiss24Regular,
+} from '@fluentui/react-icons'
 
 const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
@@ -39,7 +43,6 @@ export default function Menu({
             className="self-stretch p-2 flex items-center justify-center cursor-pointer"
             {...restoreFocusTargetAttributes}
             onClick={() => {
-              console.log('Teste teste teste teste.....')
               setIsOpen(!isOpen)
             }}
           >
@@ -53,11 +56,20 @@ export default function Menu({
             onOpenChange={(_, { open }) => setIsOpen(open)}
           >
             <DrawerHeader>
-              <DrawerHeaderTitle>Conteúdos do menu</DrawerHeaderTitle>
+              <DrawerHeaderTitle
+                action={
+                  <Button
+                    appearance="subtle"
+                    aria-label="Close"
+                    icon={<Dismiss24Regular />}
+                    onClick={() => setIsOpen(false)}
+                  />
+                }
+              >
+                BToken: Serviços
+              </DrawerHeaderTitle>
             </DrawerHeader>
-            <DrawerBody>
-              <p>Drawer content</p>
-            </DrawerBody>
+            <DrawerBody>{children}</DrawerBody>
           </Drawer>
         </>
       ) : null}

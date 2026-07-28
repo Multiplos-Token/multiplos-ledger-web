@@ -37,11 +37,9 @@ export default function TopMenu({
   }, [])
 
   return (
-    <div className="flex">
-      <Button
-        shape="square"
-        icon={<ArrowUploadRegular />}
-        appearance={selected == 'register' ? 'outline' : 'subtle'}
+    <div className="flex flex-col h-full">
+      <div
+        className="flex flex-row cursor-pointer font-bold p-2 gap-2 hover:bg-gray-100 rounded"
         onClick={() => {
           setSelected('register')
           if (onSelect) {
@@ -49,12 +47,11 @@ export default function TopMenu({
           }
         }}
       >
+        <ArrowUploadRegular />
         Registrar
-      </Button>
-      <Button
-        shape="square"
-        icon={<ArchiveRegular />}
-        appearance={selected == 'files' ? 'outline' : 'subtle'}
+      </div>
+      <div
+        className="flex flex-row cursor-pointer font-bold p-2 gap-2 hover:bg-gray-100 rounded"
         onClick={() => {
           setSelected('files')
           if (onSelect) {
@@ -62,12 +59,11 @@ export default function TopMenu({
           }
         }}
       >
+        <ArchiveRegular />
         Arquivos
-      </Button>
-      <Button
-        shape="square"
-        icon={<ArchiveRegular />}
-        appearance={selected == 'verification' ? 'outline' : 'subtle'}
+      </div>
+      <div
+        className="flex flex-row cursor-pointer font-bold p-2 gap-2 hover:bg-gray-100 rounded"
         onClick={() => {
           setSelected('verification')
           if (onSelect) {
@@ -75,26 +71,24 @@ export default function TopMenu({
           }
         }}
       >
+        <ArchiveRegular />
         Verificar
-      </Button>
+      </div>
 
       {isUserSystemManager ? (
-        <Button
-          shape="square"
-          icon={<ArchiveRegular />}
-          appearance="subtle"
+        <div
+          className="flex flex-row cursor-pointer font-bold p-2 gap-2 hover:bg-gray-100 rounded"
           onClick={() => {
             router.push('/management')
           }}
         >
+          <ArchiveRegular />
           Gerenciamento
-        </Button>
+        </div>
       ) : null}
       <div className="grow" />
-      <Button
-        shape="square"
-        icon={<PersonRegular />}
-        appearance={selected == 'user' ? 'outline' : 'subtle'}
+      <div
+        className="flex flex-row cursor-pointer font-bold p-2 gap-2 hover:bg-gray-100 rounded"
         onClick={() => {
           setSelected('user')
           if (onSelect) {
@@ -102,8 +96,9 @@ export default function TopMenu({
           }
         }}
       >
+        <PersonRegular />
         Usuário
-      </Button>
+      </div>
     </div>
   )
 }
