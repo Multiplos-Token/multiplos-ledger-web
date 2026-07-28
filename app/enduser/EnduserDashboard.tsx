@@ -12,12 +12,15 @@ import Verification from './Verification'
 
 export default function Dashboard() {
   const [selected, setSelected] = useState('register')
+  const [menuOpen, setMenuOpen] = useState(false)
   return (
     <div className="flex flex-col h-dvh w-dvw overflow-y-auto overflow-x-hidden">
-      <Menu>
+      <Menu menuOpen={menuOpen}>
         <TopMenu
           onSelect={(s) => {
             setSelected(s)
+            console.log('Chegou nessa merda aqui!!!!!!')
+            setMenuOpen(!menuOpen)
           }}
         />
       </Menu>

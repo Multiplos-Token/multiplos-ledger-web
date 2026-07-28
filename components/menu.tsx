@@ -23,7 +23,7 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || ''
 
 export default function Menu({
   logged = true,
-  children,
+  children = null,
 }: {
   logged?: boolean
   children?: ReactNode
@@ -69,7 +69,13 @@ export default function Menu({
                 BToken: Serviços
               </DrawerHeaderTitle>
             </DrawerHeader>
-            <DrawerBody>{children}</DrawerBody>
+            <DrawerBody
+              onClick={() => {
+                setIsOpen(false)
+              }}
+            >
+              {children}
+            </DrawerBody>
           </Drawer>
         </>
       ) : null}
