@@ -133,7 +133,7 @@ export default function Files() {
                 <div
                   className="mb-1 overflow-x-auto w-full cursor-pointer"
                   onClick={() =>
-                    copyDataToClipboard('referenceId', v.reference_id)
+                    copyDataToClipboard('Id de Referência', v.reference_id)
                   }
                 >
                   {v.reference_id}
@@ -173,7 +173,18 @@ export default function Files() {
             <DialogContent>
               <div className="flex flex-col items-stretch mb-4">
                 <div className="font-bold">Identificador de Referência:</div>
-                <div className="w-full overflow-auto">
+                <div
+                  className="w-full overflow-auto cursor-pointer"
+                  onClick={() => {
+                    setOpen(false)
+                    setCurrentFile(null)
+                    setInfoData(null)
+                    copyDataToClipboard(
+                      'Id de Referência',
+                      currentFile?.reference_id
+                    )
+                  }}
+                >
                   {currentFile?.reference_id}
                 </div>
               </div>
@@ -203,7 +214,7 @@ export default function Files() {
               {infoSuccess ? (
                 <div className="flex items-stretch flex-col mb-4">
                   <div className="text-lg font-bold">Assinatura digital:</div>
-                  <table>
+                  <table className="[&_td]:p-3 hidden md:table">
                     <tbody>
                       <tr>
                         <td className="font-bold">Responsável</td>
@@ -220,7 +231,15 @@ export default function Files() {
                       <tr>
                         <td className="font-bold">MD5-Sum</td>
                         <td>
-                          <div className="w-80 overflow-auto">
+                          <div
+                            className="w-80 overflow-auto cursor-pointer"
+                            onClick={() => {
+                              setOpen(false)
+                              setCurrentFile(null)
+                              setInfoData(null)
+                              copyDataToClipboard('MD5-Sum', infoData?.md5)
+                            }}
+                          >
                             {infoData?.md5}
                           </div>
                         </td>
@@ -228,7 +247,15 @@ export default function Files() {
                       <tr>
                         <td className="font-bold">SHA2-Sum</td>
                         <td>
-                          <div className="w-80 overflow-auto">
+                          <div
+                            className="w-80 overflow-auto cursor-pointer"
+                            onClick={() => {
+                              setOpen(false)
+                              setCurrentFile(null)
+                              setInfoData(null)
+                              copyDataToClipboard('SHA2-Sum', infoData?.sha2)
+                            }}
+                          >
                             {infoData?.sha2}
                           </div>
                         </td>
@@ -236,7 +263,15 @@ export default function Files() {
                       <tr>
                         <td className="font-bold">SHA3-Sum</td>
                         <td>
-                          <div className="w-80 overflow-auto">
+                          <div
+                            className="w-80 overflow-auto cursor-pointer"
+                            onClick={() => {
+                              setOpen(false)
+                              setCurrentFile(null)
+                              setInfoData(null)
+                              copyDataToClipboard('SHA3-Sum', infoData?.sha3)
+                            }}
+                          >
                             {infoData?.sha3}
                           </div>
                         </td>
@@ -244,13 +279,100 @@ export default function Files() {
                       <tr>
                         <td className="font-bold">Transação</td>
                         <td>
-                          <div className="w-80 overflow-auto">
+                          <div
+                            className="w-80 overflow-auto cursor-pointer"
+                            onClick={() => {
+                              setOpen(false)
+                              setCurrentFile(null)
+                              setInfoData(null)
+                              copyDataToClipboard(
+                                'Id de Transação',
+                                infoData?.transaction_hash
+                              )
+                            }}
+                          >
                             {infoData?.transaction_hash}
                           </div>
                         </td>
                       </tr>
                     </tbody>
                   </table>
+                  <div className="md:hidden pt-2">
+                    {/* Element */}
+                    <div className="mb-2 font-bold">Responsável</div>
+                    <div className="mb-4">{infoData?.owner_user_name}</div>
+                    {/* Element */}
+                    <div className="mb-2 font-bold">Nome Completo</div>
+                    <div className="mb-4">
+                      {infoData?.owner_masked_full_name}
+                    </div>
+                    {/* Element */}
+                    <div className="mb-2 font-bold">E-mail</div>
+                    <div className="mb-4">{infoData?.owner_masked_email}</div>
+                    {/* Element */}
+                    <div className="mb-2 font-bold">MD5-Sum</div>
+                    <div className="mb-4">
+                      <div
+                        className="w-full overflow-auto cursor-pointer"
+                        onClick={() => {
+                          setOpen(false)
+                          setCurrentFile(null)
+                          setInfoData(null)
+                          copyDataToClipboard('MD5-Sum', infoData?.md5)
+                        }}
+                      >
+                        {infoData?.md5}
+                      </div>
+                    </div>
+                    {/* Element */}
+                    <div className="mb-2 font-bold">SHA2-Sum</div>
+                    <div className="mb-4">
+                      <div
+                        className="w-full overflow-auto cursor-pointer"
+                        onClick={() => {
+                          setOpen(false)
+                          setCurrentFile(null)
+                          setInfoData(null)
+                          copyDataToClipboard('SHA2-Sum', infoData?.sha2)
+                        }}
+                      >
+                        {infoData?.sha2}
+                      </div>
+                    </div>
+                    {/* Element */}
+                    <div className="mb-2 font-bold">SHA3-Sum</div>
+                    <div className="mb-4">
+                      <div
+                        className="w-full overflow-auto cursor-pointer"
+                        onClick={() => {
+                          setOpen(false)
+                          setCurrentFile(null)
+                          setInfoData(null)
+                          copyDataToClipboard('SHA3-Sum', infoData?.sha3)
+                        }}
+                      >
+                        {infoData?.sha3}
+                      </div>
+                    </div>
+                    {/* Element */}
+                    <div className="mb-2 font-bold">Transação</div>
+                    <div className="mb-4">
+                      <div
+                        className="w-full overflow-auto cursor-pointer"
+                        onClick={() => {
+                          setOpen(false)
+                          setCurrentFile(null)
+                          setInfoData(null)
+                          copyDataToClipboard(
+                            'Id de Transação',
+                            infoData?.transaction_hash
+                          )
+                        }}
+                      >
+                        {infoData?.transaction_hash}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               ) : null}
             </DialogContent>
