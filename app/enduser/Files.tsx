@@ -30,6 +30,10 @@ export default function Files() {
   const [signingSubmitting, setSigningSubmitting] = useState(false)
   const [signingError, setSigningError] = useState('')
 
+  const [copiedText, setCopiedText] = useState('')
+  const [copiedTextType, setCopiedTextType] = useState('')
+  const [isCopyOpen, setIsCopyOpen] = useState(false)
+
   const executeLoading = async () => {
     const files = await listUserFiles()
     if (files.success) {
@@ -61,9 +65,10 @@ export default function Files() {
   }
 
   const copyDataToClipboard = async (dataType: string, data: string) => {
-    console.log('Send data to clipboard')
-    console.log('Data type: ', dataType)
-    console.log('Data: ', data)
+    await navigator.clipboard.writeText(data)
+    setCopiedText(data)
+    setCopiedTextType(dataType)
+    setIsCopyOpen(true)
   }
 
   return (
@@ -90,7 +95,7 @@ export default function Files() {
                     <div
                       className="overflow-x-auto w-96 lg:w-148 xl:w-[48rem] cursor-pointer"
                       onClick={() =>
-                        copyDataToClipboard('referenceId', v.reference_id)
+                        copyDataToClipboard('Id de Referência', v.reference_id)
                       }
                     >
                       {v.reference_id}
@@ -278,6 +283,36 @@ export default function Files() {
                   Fechar
                 </Button>
               </DialogTrigger>
+            </DialogActions>
+          </DialogBody>
+        </DialogSurface>
+      </Dialog>
+      <Dialog
+        open={isCopyOpen}
+        onOpenChange={(e, data) => {
+          setCopiedText('')
+          setCopiedTextType('')
+          setIsCopyOpen(data.open)
+        }}
+        modalType="alert"
+      >
+        <DialogSurface>
+          <DialogBody>
+            <DialogTitle>Atenção</DialogTitle>
+            <DialogContent>
+              {copiedTextType} foi copiado para a área de transferência.
+            </DialogContent>
+            <DialogActions>
+              <Button
+                appearance="primary"
+                onClick={() => {
+                  setCopiedText('')
+                  setCopiedTextType('')
+                  setIsCopyOpen(false)
+                }}
+              >
+                Fechar
+              </Button>
             </DialogActions>
           </DialogBody>
         </DialogSurface>
