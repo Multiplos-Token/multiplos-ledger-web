@@ -10,6 +10,13 @@ import {
   Spinner,
   Checkbox,
   Select,
+  Dialog,
+  DialogTrigger,
+  DialogSurface,
+  DialogTitle,
+  DialogContent,
+  DialogBody,
+  DialogActions,
 } from '@fluentui/react-components'
 
 import { registerFile, getMimeType } from '@/business/file'
@@ -40,6 +47,9 @@ export default function Files() {
   const [publish, setPublish] = useState<boolean | 'mixed'>(false)
   const [referenceId, setReferenceId] = useState('')
   const [transactionId, setTransactionId] = useState('')
+  const [copiedText, setCopiedText] = useState('')
+  const [copiedTextType, setCopiedTextType] = useState('')
+  const [isCopyOpen, setIsCopyOpen] = useState(false)
 
   const fileFormik = useFormik({
     initialValues: {
@@ -49,6 +59,7 @@ export default function Files() {
     },
     onSubmit: async (values) => {
       setWait(true)
+      setErrorMessage('')
 
       const registerResponse = await registerFile({
         name: values.fileName,
@@ -108,17 +119,73 @@ export default function Files() {
               <div className="mb-4">Arquivo registrado com sucesso.</div>
             )}
             <div>Identificador de referência:</div>
-            <div className="text-bold text-sm mb-4 w-80 overflow-auto flex items-center justify-center">
+            <div
+              className="text-bold text-sm mb-4 w-4/5 overflow-auto flex items-center justify-center cursor-pointer"
+              onClick={async () => {
+                await navigator.clipboard.writeText(referenceId)
+                setCopiedText(referenceId)
+                setCopiedTextType('referenceId')
+                setIsCopyOpen(true)
+              }}
+            >
               {referenceId}
             </div>
             {transactionId !== '' ? (
               <>
                 <div>Transação de Assinatura: </div>
-                <div className="text-bold text-sm mb-4 w-80 overflow-auto flex items-center justify-center">
+                <div
+                  className="text-bold text-sm mb-4 w-4/5 overflow-auto flex items-center justify-center cursor-pointer"
+                  onClick={async () => {
+                    await navigator.clipboard.writeText(transactionId)
+                    setCopiedText(transactionId)
+                    setCopiedTextType('transactionId')
+                    setIsCopyOpen(true)
+                  }}
+                >
                   {transactionId}
                 </div>
               </>
             ) : null}
+            <Dialog
+              open={isCopyOpen}
+              onOpenChange={(e, data) => {
+                setCopiedText('')
+                setCopiedTextType('')
+                setIsCopyOpen(data.open)
+              }}
+              modalType="alert"
+            >
+              <DialogSurface>
+                <DialogBody>
+                  <DialogTitle>Atenção</DialogTitle>
+                  <DialogContent>
+                    {(() => {
+                      switch (copiedTextType) {
+                        case 'transactionId':
+                          return <>Identificador de Transação</>
+                        case 'referenceId':
+                          return <>Identificador de Referência</>
+                        default:
+                          return <>Dado desconhecido</>
+                      }
+                    })()}{' '}
+                    foi copiado para a área de transferência.
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      appearance="primary"
+                      onClick={() => {
+                        setCopiedText('')
+                        setCopiedTextType('')
+                        setIsCopyOpen(false)
+                      }}
+                    >
+                      Fechar
+                    </Button>
+                  </DialogActions>
+                </DialogBody>
+              </DialogSurface>
+            </Dialog>
           </div>
         ) : null}
         <div className="w-4/5 flex flex-col items-stretch sm:flex-row sm:items-center gap-3 mt-4">
@@ -348,7 +415,6 @@ export default function Files() {
             />
           </div>
         </div>
-
         <div className="flex flex-row-reverse p-2 w-fit md:w-2/5 mt-4">
           <Button type="submit" appearance="primary" disabled={wait}>
             Submeter {wait && <Spinner size="tiny" />}
@@ -368,6 +434,7 @@ export default function Files() {
                 if (element) {
                   element.value = ''
                 }
+                setErrorMessage('')
               }}
               disabled={wait}
             >
