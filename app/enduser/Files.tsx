@@ -73,51 +73,68 @@ export default function Files() {
 
   return (
     <div className="flex grow flex-col items-stretch">
-      <table className="m-4 hidden md:table">
-        <thead className="font-bold">
-          <tr>
-            <th className="pb-2">Nome</th>
-            <th className="pb-2">Tipo (mime)</th>
-            <th className="pb-2">Publicado</th>
-            <th className="pb-2">Id de Referência</th>
-            <th className="pb-2">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {(() => {
-            return fileData.map((v, i) => {
-              return (
-                <tr key={i}>
-                  <td className="pb-2">{v.name}</td>
-                  <td className="pb-2">{v.mime_type}</td>
-                  <td className="pb-2">{v.public ? 'sim' : 'não'}</td>
-                  <td className="pb-2">
-                    <div
-                      className="overflow-x-auto w-72 lg:w-148 xl:w-[48rem] cursor-pointer"
-                      onClick={() =>
-                        copyDataToClipboard('Id de Referência', v.reference_id)
-                      }
-                    >
-                      {v.reference_id}
-                    </div>
-                  </td>
-                  <td className="pb-2">
-                    <Tooltip content="Detalhes do Arquivo" relationship="label">
-                      <Button
-                        icon={<DocumentRegular />}
-                        {...restoreFocusTargetAttribute}
-                        onClick={() => {
-                          loadFileData(v)
-                        }}
-                      />
-                    </Tooltip>
-                  </td>
-                </tr>
-              )
-            })
-          })()}
-        </tbody>
-      </table>
+      {(() => {
+        if (fileData.length == 0) {
+          return (
+            <div className="grow-1 flex items-center justify-center">
+              Não há arquivos registrados.
+            </div>
+          )
+        }
+        return (
+          <table className="m-4 hidden md:table">
+            <thead className="font-bold">
+              <tr>
+                <th className="pb-2">Nome</th>
+                <th className="pb-2">Tipo (mime)</th>
+                <th className="pb-2">Publicado</th>
+                <th className="pb-2">Id de Referência</th>
+                <th className="pb-2">Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              {(() => {
+                return fileData.map((v, i) => {
+                  return (
+                    <tr key={i}>
+                      <td className="pb-2">{v.name}</td>
+                      <td className="pb-2">{v.mime_type}</td>
+                      <td className="pb-2">{v.public ? 'sim' : 'não'}</td>
+                      <td className="pb-2">
+                        <div
+                          className="overflow-x-auto w-72 lg:w-148 xl:w-[48rem] cursor-pointer"
+                          onClick={() =>
+                            copyDataToClipboard(
+                              'Id de Referência',
+                              v.reference_id
+                            )
+                          }
+                        >
+                          {v.reference_id}
+                        </div>
+                      </td>
+                      <td className="pb-2">
+                        <Tooltip
+                          content="Detalhes do Arquivo"
+                          relationship="label"
+                        >
+                          <Button
+                            icon={<DocumentRegular />}
+                            {...restoreFocusTargetAttribute}
+                            onClick={() => {
+                              loadFileData(v)
+                            }}
+                          />
+                        </Tooltip>
+                      </td>
+                    </tr>
+                  )
+                })
+              })()}
+            </tbody>
+          </table>
+        )
+      })()}
       <div className="md:hidden flex flex-col p-4">
         {(() => {
           return fileData.map((v, i) => {
