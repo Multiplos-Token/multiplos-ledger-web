@@ -76,6 +76,13 @@ export default function Verification() {
     validationSchema: fileRegisterValidationSchema,
   })
 
+  const copyDataToClipboard = async (dataType: string, data: string) => {
+    await navigator.clipboard.writeText(data)
+    setCopiedText(data)
+    setCopiedTextType(dataType)
+    setIsCopyOpen(true)
+  }
+
   return (
     <div className="flex min-h-full flex-col w-dvw overflow-y-auto overflow-x-hidden">
       <div className="grow" />
@@ -112,13 +119,36 @@ export default function Verification() {
                 {signature?.owner_masked_email}
               </div>
               <div className="font-bold mb-2">MD5-Sum</div>
-              <div className="mb-4 overflow-x-auto">{signature?.md5}</div>
+              <div
+                className="mb-4 overflow-x-auto cursor-pointer"
+                onClick={() => copyDataToClipboard('MD5-Sum', signature?.md5)}
+              >
+                {signature?.md5}
+              </div>
               <div className="font-bold mb-2">SHA2-Sum</div>
-              <div className="mb-4 overflow-x-auto">{signature?.sha2}</div>
+              <div
+                className="mb-4 overflow-x-auto cursor-pointer"
+                onClick={() => copyDataToClipboard('SHA2-Sum', signature?.sha2)}
+              >
+                {signature?.sha2}
+              </div>
               <div className="font-bold mb-2">SHA3-Sum</div>
-              <div className="mb-4 overflow-x-auto">{signature?.sha3}</div>
+              <div
+                className="mb-4 overflow-x-auto cursor-pointer"
+                onClick={() => copyDataToClipboard('SHA3-Sum', signature?.sha3)}
+              >
+                {signature?.sha3}
+              </div>
               <div className="font-bold mb-2">Transação</div>
-              <div className="mb-4 overflow-x-auto">
+              <div
+                className="mb-4 overflow-x-auto cursor-pointer"
+                onClick={() =>
+                  copyDataToClipboard(
+                    'Id de Transação',
+                    signature?.transaction_hash
+                  )
+                }
+              >
                 {signature?.transaction_hash}
               </div>
             </div>
@@ -143,25 +173,54 @@ export default function Verification() {
                 <tr>
                   <td className="font-bold">MD5-Sum</td>
                   <td>
-                    <div className="w-80 overflow-auto">{signature?.md5}</div>
+                    <div
+                      className="w-80 overflow-auto cursor-pointer"
+                      onClick={() =>
+                        copyDataToClipboard('MD5-Sum', signature?.md5)
+                      }
+                    >
+                      {signature?.md5}
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td className="font-bold">SHA2-Sum</td>
                   <td>
-                    <div className="w-80 overflow-auto">{signature?.sha2}</div>
+                    <div
+                      className="w-80 overflow-auto cursor-pointer"
+                      onClick={() =>
+                        copyDataToClipboard('SHA2-Sum', signature?.sha2)
+                      }
+                    >
+                      {signature?.sha2}
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td className="font-bold">SHA3-Sum</td>
                   <td>
-                    <div className="w-80 overflow-auto">{signature?.sha3}</div>
+                    <div
+                      className="w-80 overflow-auto cursor-pointer"
+                      onClick={() =>
+                        copyDataToClipboard('SHA3-Sum', signature?.sha3)
+                      }
+                    >
+                      {signature?.sha3}
+                    </div>
                   </td>
                 </tr>
                 <tr>
                   <td className="font-bold">Transação</td>
                   <td>
-                    <div className="w-80 overflow-auto">
+                    <div
+                      className="w-80 overflow-auto cursor-pointer"
+                      onClick={() =>
+                        copyDataToClipboard(
+                          'Id de Transação',
+                          signature?.transaction_hash
+                        )
+                      }
+                    >
                       {signature?.transaction_hash}
                     </div>
                   </td>
