@@ -64,6 +64,11 @@ export interface UserInfoT {
   status: string
 }
 
+export interface UserFinancialsT {
+  name: string
+  // TODO: continue here
+}
+
 export async function registerUser(
   userData: UserDataT
 ): Promise<RegisterUserStatusT> {
@@ -203,4 +208,9 @@ export async function verifyUserSystemManager(): Promise<boolean> {
   })
 
   return response.status === 204
+}
+
+export async function userFinancials(): Promise<UserStatusResponseT> {
+  const uft = {} as UserStatusResponseT
+  return uft
 }

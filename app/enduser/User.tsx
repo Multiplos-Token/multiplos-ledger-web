@@ -3,7 +3,12 @@
 import { useState, useEffect } from 'react'
 import { Button, Spinner } from '@fluentui/react-components'
 import { ArrowExitRegular } from '@fluentui/react-icons'
-import { userLogoff, userStatus, UserInfoT } from '@/business/user'
+import {
+  userLogoff,
+  userStatus,
+  UserInfoT,
+  userFinancials,
+} from '@/business/user'
 import { useRouter } from 'next/navigation'
 
 export default function Files() {
@@ -15,7 +20,8 @@ export default function Files() {
   const loadData = async () => {
     // Load user data in background....
     let status = await userStatus()
-    if (status.success) {
+    let financials = await userFinancials()
+    if (status.success && financials.success) {
       setUserInfo(status.value)
       setLoading(false)
     }
