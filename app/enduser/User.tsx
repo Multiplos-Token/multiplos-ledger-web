@@ -33,7 +33,7 @@ export default function Files() {
             Carregando dados de usuário... &nbsp; <Spinner />
           </div>
         ) : (
-          <div className="grow flex flex-col">
+          <div className="grow flex flex-col min-w-0 w-full">
             <div className="text-2xl">Dados de Usuário:</div>
             <table className="w-full hidden md:table mt-4">
               <tbody>
@@ -89,33 +89,47 @@ export default function Files() {
                 </tr>
               </tbody>
             </table>
-            <div className="md:hidden mt-4 w-full flex flex-col">
+            <div className="md:hidden mt-4 w-full min-w-0 flex flex-col">
               <div>Nome:</div>
-              <div className="font-bold">{userInfo?.name}</div>
+              <div className="font-bold overflow-x-auto">{userInfo?.name}</div>
               <div>Senha:</div>
-              <div className="font-bold">{userInfo?.password}</div>
+              <div className="font-bold overflow-x-auto">
+                {userInfo?.password}
+              </div>
               <div>E-mail:</div>
-              <div className="font-bold">{userInfo?.email.toLowerCase()}</div>
+              <div className="font-bold overflow-x-auto">
+                {userInfo?.email.toLowerCase()}
+              </div>
               <div>Primeiro Nome:</div>
-              <div className="font-bold">{userInfo?.first_name}</div>
+              <div className="font-bold overflow-x-auto">
+                {userInfo?.first_name}
+              </div>
               <div className="overflow-x-auto">Último Nome (Sobrenome):</div>
-              <div className="font-bold">{userInfo?.last_name}</div>
+              <div className="font-bold overflow-x-auto">
+                {userInfo?.last_name}
+              </div>
               <div>Nome Completo:</div>
-              <div className="font-bold">{userInfo?.complete_name}</div>
+              <div className="font-bold overflow-x-auto">
+                {userInfo?.complete_name}
+              </div>
               <div>Título:</div>
-              <div className="font-bold">{userInfo?.title}</div>
+              <div className="font-bold overflow-x-auto">{userInfo?.title}</div>
               <div>Telefone:</div>
-              <div className="font-bold">{userInfo?.phone_number}</div>
+              <div className="font-bold overflow-x-auto">
+                {userInfo?.phone_number}
+              </div>
               <div>Código de País:</div>
               <div className="font-bold">
                 {userInfo?.country_iso2.toUpperCase()}
               </div>
               <div className="overflow-x-auto">Documento de Identificação:</div>
-              <div className="font-bold">
+              <div className="font-bold overflow-x-auto">
                 {userInfo?.legal_identification.toUpperCase()}
               </div>
               <div>Endereço Ethereum:</div>
-              <div className="font-bold">{userInfo?.default_ether_account}</div>
+              <div className="font-bold overflow-x-auto">
+                {userInfo?.default_ether_account}
+              </div>
             </div>
           </div>
         )}
