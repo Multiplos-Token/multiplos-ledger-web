@@ -93,7 +93,7 @@ export default function Files() {
                   <td className="pb-2">{v.public ? 'sim' : 'não'}</td>
                   <td className="pb-2">
                     <div
-                      className="overflow-x-auto w-96 lg:w-148 xl:w-[48rem] cursor-pointer"
+                      className="overflow-x-auto w-72 lg:w-148 xl:w-[48rem] cursor-pointer"
                       onClick={() =>
                         copyDataToClipboard('Id de Referência', v.reference_id)
                       }

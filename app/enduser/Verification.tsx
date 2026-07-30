@@ -10,6 +10,13 @@ import {
   Spinner,
   Checkbox,
   Select,
+  Dialog,
+  DialogTrigger,
+  DialogSurface,
+  DialogTitle,
+  DialogBody,
+  DialogActions,
+  DialogContent,
 } from '@fluentui/react-components'
 
 import { registerFile, getMimeType, verifyFile } from '@/business/file'
@@ -35,6 +42,10 @@ export default function Verification() {
   const [success, setSuccess] = useState(false)
   const [referenceId, setReferenceId] = useState('')
   const [transactionId, setTransactionId] = useState('')
+
+  const [copiedText, setCopiedText] = useState('')
+  const [copiedTextType, setCopiedTextType] = useState('')
+  const [isCopyOpen, setIsCopyOpen] = useState(false)
 
   const fileFormik = useFormik({
     initialValues: {
@@ -81,9 +92,37 @@ export default function Verification() {
           </div>
         ) : null}
         {signature !== null ? (
-          <div className="flex items-stretch flex-col mb-4">
-            <div className="text-lg font-bold">Assinatura digital:</div>
-            <table>
+          <div className="flex items-center md:items-stretch flex-col mb-4 w-full md:w-fit">
+            <div className="text-lg font-bold md:w-2/3 mt-8">
+              Assinatura digital:
+            </div>
+            <div className="md:hidden self-stretch pl-8 pr-4 md:pl-0 md:pr-0 md:w-2/3">
+              <div className="font-bold mb-2">Nome</div>
+              <div className="mb-4 overflow-x-auto">{signature?.name}</div>
+              <div className="font-bold mb-2">Responsável</div>
+              <div className="mb-4 overflow-x-auto">
+                {signature?.owner_user_name}
+              </div>
+              <div className="font-bold mb-2">Nome Completo</div>
+              <div className="mb-4 overflow-x-auto">
+                {signature?.owner_masked_full_name}
+              </div>
+              <div className="font-bold mb-2">E-mail</div>
+              <div className="mb-4 overflow-x-auto">
+                {signature?.owner_masked_email}
+              </div>
+              <div className="font-bold mb-2">MD5-Sum</div>
+              <div className="mb-4 overflow-x-auto">{signature?.md5}</div>
+              <div className="font-bold mb-2">SHA2-Sum</div>
+              <div className="mb-4 overflow-x-auto">{signature?.sha2}</div>
+              <div className="font-bold mb-2">SHA3-Sum</div>
+              <div className="mb-4 overflow-x-auto">{signature?.sha3}</div>
+              <div className="font-bold mb-2">Transação</div>
+              <div className="mb-4 overflow-x-auto">
+                {signature?.transaction_hash}
+              </div>
+            </div>
+            <table className="hidden md:table [&_td]:p-3 hidden md:table">
               <tbody>
                 <tr>
                   <td className="font-bold">Nome</td>
@@ -129,6 +168,36 @@ export default function Verification() {
                 </tr>
               </tbody>
             </table>
+            <Dialog
+              open={isCopyOpen}
+              onOpenChange={(e, data) => {
+                setCopiedText('')
+                setCopiedTextType('')
+                setIsCopyOpen(data.open)
+              }}
+              modalType="alert"
+            >
+              <DialogSurface>
+                <DialogBody>
+                  <DialogTitle>Atenção</DialogTitle>
+                  <DialogContent>
+                    {copiedTextType} foi copiado para a área de transferência.
+                  </DialogContent>
+                  <DialogActions>
+                    <Button
+                      appearance="primary"
+                      onClick={() => {
+                        setCopiedText('')
+                        setCopiedTextType('')
+                        setIsCopyOpen(false)
+                      }}
+                    >
+                      Fechar
+                    </Button>
+                  </DialogActions>
+                </DialogBody>
+              </DialogSurface>
+            </Dialog>
           </div>
         ) : null}
         {success ? (
@@ -152,10 +221,10 @@ export default function Verification() {
             ) : null}
           </div>
         ) : null}
-        <div className="flex flex-row items-center justify-center gap-3 m-4 mb-0">
-          <div className="mr-4">Arquivo:</div>
+        <div className="p-4 w-full sm:w-2/3 max-w-xl flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 m-4 mb-0">
+          <div className="mr-4 pl-4 sm:pl-0">Arquivo:</div>
           <input
-            className="min-w-0 ml-4 cursor-pointer"
+            className="grow min-w-0 ml-4 cursor-pointer border border-gray-300 rounded p-1"
             id="file"
             name="file"
             type="file"
