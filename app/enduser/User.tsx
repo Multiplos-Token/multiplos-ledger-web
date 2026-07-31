@@ -7,6 +7,7 @@ import {
   userLogoff,
   userStatus,
   UserInfoT,
+  UserFinancialsT,
   userFinancials,
 } from '@/business/user'
 import { useRouter } from 'next/navigation'
@@ -16,20 +17,29 @@ export default function Files() {
   const [loggingOff, setLoggingOff] = useState(false)
   const [loading, setLoading] = useState(true)
   const [userInfo, setUserInfo] = useState<null | UserInfoT>(null)
+  const [financials, setFinancials] = useState<Array<UserFinancialsT>>([])
 
   const loadData = async () => {
     // Load user data in background....
     let status = await userStatus()
-    let financials = await userFinancials()
-    if (status.success && financials.success) {
-      setUserInfo(status.value)
-      setLoading(false)
+
+    if (status.success) {
+      const uinfo = status.value as UserInfoT
+
+      let financials = await userFinancials({ userName: uinfo.name })
+      if (financials.success) {
+        setUserInfo(status.value)
+        setFinancials(financials.value!)
+        setLoading(false)
+      }
     }
   }
 
   useEffect(() => {
     loadData()
   }, [])
+
+  console.log('These are financials: ', financials)
 
   return (
     <div className="w-9/10 md:w-4/5 min-h-full flex flex-col">

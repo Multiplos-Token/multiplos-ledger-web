@@ -65,8 +65,10 @@ export interface UserInfoT {
 }
 
 export interface UserFinancialsT {
-  name: string
-  // TODO: continue here
+  description: string
+  balance: number
+  date: string
+  movement_value: number
 }
 
 export async function registerUser(
@@ -210,7 +212,23 @@ export async function verifyUserSystemManager(): Promise<boolean> {
   return response.status === 204
 }
 
-export async function userFinancials(): Promise<UserStatusResponseT> {
-  const uft = {} as UserStatusResponseT
-  return uft
+export async function userFinancials({
+  userName,
+}: {
+  userName: string
+}): Promise<UserStatusResponseT> {
+  const u = { success: false } as UserStatusResponseT
+
+  const response = await c({
+    path: `/financial-management/api/financial/user/${userName}/account/BRL/statement`,
+    method: 'POST',
+  })
+
+  if (response.status >= 200 && response.status <= 299) {
+    u.success = true
+    // Only user info is relevant - any other data can be ignored:
+    u.value = response.data
+  }
+
+  return u
 }
