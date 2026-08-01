@@ -25,13 +25,12 @@ export default function Files() {
 
     if (status.success) {
       const uinfo = status.value as UserInfoT
-
+      setUserInfo(uinfo)
       let financials = await userFinancials({ userName: uinfo.name })
       if (financials.success) {
-        setUserInfo(status.value)
         setFinancials(financials.value!)
-        setLoading(false)
       }
+      setLoading(false)
     }
   }
 
@@ -39,18 +38,30 @@ export default function Files() {
     loadData()
   }, [])
 
-  console.log('These are financials: ', financials)
+  const dateFormatter = new Intl.DateTimeFormat('en-GB', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false, // Forces 24-hour format
+  })
+  const curFormatter = new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+  })
 
   return (
     <div className="w-9/10 md:w-4/5 min-h-full flex flex-col">
       <div className="grow-1 flex mt-4">
         {loading ? (
-          <div className="flex items-center justify-center">
+          <div className="grow flex items-center justify-center">
             Carregando dados de usuário... &nbsp; <Spinner />
           </div>
         ) : (
           <div className="grow flex flex-col min-w-0 w-full">
-            <div className="text-2xl">Dados de Usuário:</div>
+            <div className="text-2xl">Dados Pessoais:</div>
             <table className="w-full hidden md:table mt-4">
               <tbody>
                 <tr className="w-full">
@@ -150,18 +161,103 @@ export default function Files() {
           </div>
         )}
       </div>
-      <div className="grow-2 flex items-center justify-center">
-        {loading ? (
-          <div>
-            Carregando dados financeiros... &nbsp; <Spinner />
+      {loading ? (
+        <div className="grow flex items-center justify-center">
+          Carregando dados financeiros... &nbsp; <Spinner />
+        </div>
+      ) : (
+        <div className="w-9/10 md:w-4/5 min-h-full grow-2 flex justify-center mt-8">
+          <div className="w-full">
+            <div className="text-2xl">Dados Financeiros:</div>
+            {financials.length == 0 ? (
+              <div>Você não tem operações financeiras.</div>
+            ) : (
+              <>
+                <div className="md:hidden">
+                  {financials.toReversed().map((v, i) => {
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          marginTop: i == 0 ? '1rem' : '0.5rem',
+                        }}
+                      >
+                        <div className="font-bold">Data</div>
+                        <div
+                          style={{
+                            color: v.movement_value < 0 ? 'red' : undefined,
+                          }}
+                        >
+                          {dateFormatter.format(new Date(v.date))}
+                        </div>
+                        <div className="font-bold">Saldo Atual</div>
+                        <div
+                          style={{
+                            color: v.movement_value < 0 ? 'red' : undefined,
+                          }}
+                        >
+                          {curFormatter.format(v.balance / 100)}
+                        </div>
+                        <div className="font-bold">Descrição</div>
+                        <div
+                          style={{
+                            color: v.movement_value < 0 ? 'red' : undefined,
+                          }}
+                        >
+                          {v.description}
+                        </div>
+                        <div className="font-bold">Valor (BRL)</div>
+                        <div
+                          style={{
+                            color: v.movement_value < 0 ? 'red' : undefined,
+                          }}
+                        >
+                          {curFormatter.format(v.movement_value / 100)}
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+                <table className="hidden md:table w-full mt-4">
+                  <thead>
+                    <tr>
+                      <th className="pb-2 pr-2">Data</th>
+                      <th className="pb-2 pr-2 whitespace-nowrap">
+                        Saldo Atual
+                      </th>
+                      <th className="pb-2 pr-2">Descrição</th>
+                      <th className="pb-2 whitespace-nowrap">Valor (BRL)</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {financials.toReversed().map((v, i) => {
+                      return (
+                        <tr
+                          key={i}
+                          style={{
+                            color: v.movement_value < 0 ? 'red' : undefined,
+                          }}
+                        >
+                          <td className="pb-2 pr-2 whitespace-nowrap">
+                            {dateFormatter.format(new Date(v.date))}
+                          </td>
+                          <td className="pb-2 pr-2 ">
+                            {curFormatter.format(v.balance / 100)}
+                          </td>
+                          <td className="pb-2 pr-2 ">{v.description}</td>
+                          <td className="pb-2">
+                            {curFormatter.format(v.movement_value / 100)}
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </>
+            )}
           </div>
-        ) : (
-          <div className="text-red-500">
-            Dados financeiros (implementar depois de ter o registro de
-            documento)
-          </div>
-        )}
-      </div>
+        </div>
+      )}
       <div className="flex flex-row-reverse mb-4">
         <Button
           icon={<ArrowExitRegular />}
