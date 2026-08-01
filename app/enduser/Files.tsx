@@ -136,42 +136,40 @@ export default function Files() {
         )
       })()}
       <div className="md:hidden flex flex-col p-4">
-        {(() => {
-          return fileData.map((v, i) => {
-            return (
-              <div className="self-stretch flex flex-col" key={i}>
-                <div className="font-bold">Nome</div>
-                <div className="mb-1">{v.name}</div>
-                <div className="font-bold">Tipo (mime)</div>
-                <div className="mb-1">{v.mime_type}</div>
-                <div className="font-bold">Publicado</div>
-                <div className="mb-1">{v.public ? 'sim' : 'não'}</div>
-                <div className="font-bold">Id de Referência</div>
-                <div
-                  className="mb-1 overflow-x-auto w-full cursor-pointer"
-                  onClick={() =>
-                    copyDataToClipboard('Id de Referência', v.reference_id)
-                  }
-                >
-                  {v.reference_id}
-                </div>
-                <div className="font-bold">Ações</div>
-                <div className="mb-4">
-                  <Tooltip content="Detalhes do Arquivo" relationship="label">
-                    <Button
-                      icon={<DocumentRegular />}
-                      {...restoreFocusTargetAttribute}
-                      onClick={() => {
-                        loadFileData(v)
-                      }}
-                    />
-                  </Tooltip>
-                </div>
-                <div className="border border-gray-200 mb-8" />
+        {fileData.map((v, i) => {
+          return (
+            <div className="self-stretch flex flex-col" key={i}>
+              <div className="font-bold">Nome</div>
+              <div className="mb-1">{v.name}</div>
+              <div className="font-bold">Tipo (mime)</div>
+              <div className="mb-1">{v.mime_type}</div>
+              <div className="font-bold">Publicado</div>
+              <div className="mb-1">{v.public ? 'sim' : 'não'}</div>
+              <div className="font-bold">Id de Referência</div>
+              <div
+                className="mb-1 overflow-x-auto w-full cursor-pointer"
+                onClick={() =>
+                  copyDataToClipboard('Id de Referência', v.reference_id)
+                }
+              >
+                {v.reference_id}
               </div>
-            )
-          })
-        })()}
+              <div className="font-bold">Ações</div>
+              <div className="mb-4">
+                <Tooltip content="Detalhes do Arquivo" relationship="label">
+                  <Button
+                    icon={<DocumentRegular />}
+                    {...restoreFocusTargetAttribute}
+                    onClick={() => {
+                      loadFileData(v)
+                    }}
+                  />
+                </Tooltip>
+              </div>
+              <div className="border border-gray-200 mb-8" />
+            </div>
+          )
+        })}
       </div>
       <Dialog
         // this controls the dialog open state
