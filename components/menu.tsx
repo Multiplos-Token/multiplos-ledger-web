@@ -83,14 +83,14 @@ export default function Menu({
         <div className="flex-grow" />
         <Link href="/">
           <Image
-            src="/home/logo-btoken.svg"
+            src={`${basePath}/logo-btoken.svg`}
             alt="btoken"
             width={192}
             height={64}
             className="ml-2 hidden sm:block"
           />
           <Image
-            src="/home/logo-btoken.svg"
+            src={`${basePath}/logo-btoken.svg`}
             alt="btoken"
             width={96}
             height={32}
