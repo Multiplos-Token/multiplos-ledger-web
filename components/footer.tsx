@@ -9,14 +9,14 @@ export default function Footer({ logged = true }: { logged?: boolean }) {
       <div className="self-stretch mb-4 md:mb-0 md:mr-8 flex flex-col">
         <Link href="/">
           <Image
-            src={`${basePath}/logo-btoken.svg`}
+            src={`${basePath}/logo-cartorario.svg`}
             alt="btoken"
             width={96}
             height={32}
             className="ml-2 hidden sm:block"
           />
           <Image
-            src={`${basePath}/logo-btoken.svg`}
+            src={`${basePath}/logo-cartorario.svg`}
             alt="btoken"
             width={48}
             height={16}

@@ -42,8 +42,8 @@ export default function Home() {
           </div>
           <div className="grow-1" />
           <div className="self-stretch text-lg md:text-2xl">
-            A <b>Btoken</b> oferece soluções de confiabilidade digital, baseadas
-            na Tecnologia Blockchain, em{' '}
+            O <b>Cartorario</b> oferece soluções de confiabilidade digital,
+            baseadas na Tecnologia Blockchain, em{' '}
             <a className="font-bold" href="#environment">
               ambiente de alta segurança
             </a>
@@ -188,7 +188,7 @@ export default function Home() {
               Arquitetura Técnica e Segurança
             </div>
             <div className="self-stretch text-lg md:text-2xl">
-              A <b>Btoken</b> hospeda seus sistemas em um ambiente altamente
+              O <b>Cartorario</b> hospeda seus sistemas em um ambiente altamente
               seguro, com várias barreiras para inibir qualquer tipo de
               vazamento de dados ou entradas não autorizadas, com as seguintes
               características:
@@ -244,7 +244,7 @@ export default function Home() {
             </div>
             <div className="grow-1" />
             <div className="self-stretch text-lg md:text-2xl">
-              A <b>Btoken</b> não é apenas uma ferramenta de registro de
+              O <b>Cartorario</b> não é apenas uma ferramenta de registro de
               documentos, nós também oferecemos uma{' '}
               <a className="font-bold" href="/docs">
                 API completa
@@ -254,7 +254,8 @@ export default function Home() {
             <div className="self-stretch text-lg md:text-2xl">
               Além disso, se você quiser, ativamente, promover nossas soluções,
               podemos abrir uma parceria comissionada, que permite a
-              participação da sua empresa em novos negócios da <b>BToken</b>.
+              participação da sua empresa em novos negócios do <b>Cartorario</b>
+              .
             </div>
             <div className="self-stretch text-lg md:text-2xl">
               <Link className="font-bold" href="/contact">
