@@ -28,7 +28,7 @@ export default function Files() {
       setUserInfo(uinfo)
       let financials = await userFinancials({ userName: uinfo.name })
       if (financials.success) {
-        setFinancials(financials.value!)
+        setFinancials(financials.value! || [])
       }
       setLoading(false)
     }
