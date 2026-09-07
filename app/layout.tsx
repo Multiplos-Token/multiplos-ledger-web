@@ -7,8 +7,8 @@ import { Providers, rubik } from './providers'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'BToken',
-  description: 'BToken Ledget Timestamp',
+  title: 'Cartorario',
+  description: 'Cartorario Ledger Timestamp',
 }
 
 export default function RootLayout({
