@@ -29,7 +29,7 @@ Frontend (Next.js 16 App Router, React 19, TS, Tailwind v4) for the Cartorario/B
 
 ## UI & conventions
 
-- Two UI kits are intentional: Fluent UI v9 (primary; custom brand theme + SSR renderer wired manually in `app/providers.tsx`, relies on the `fluentui-next-appdir-directive` SWC plugin in `next.config.ts` — do not remove it) and antd v6 (themed `ConfigProvider` in `providers.tsx`).
+- Fluent UI v9 is the primary UI kit (custom brand theme + SSR renderer wired manually in `app/providers.tsx`, relies on the `fluentui-next-appdir-directive` SWC plugin in `next.config.ts` — do not remove it). antd v6 (themed `ConfigProvider` in `providers.tsx`) exists only to fill gaps: prefer Fluent, and use antd only when Fluent lacks the needed component.
 - Forms: Formik + Yup with `Yup.setLocale(ptForm)` (`yup-locale-pt`). All user-facing copy is Brazilian Portuguese.
 - Tailwind v4 brand tokens via `@theme inline` in `app/globals.css`: `bg-logo-primary` (#182A54), `text-logo-secondary` (#22b354), `bg-background`, plus v4 numeric utilities like `h-178`, `grow-3`.
 - Code style: Prettier — no semicolons, single quotes, 2-space, trailing comma `es5`.
