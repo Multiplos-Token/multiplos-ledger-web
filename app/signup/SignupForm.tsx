@@ -455,7 +455,7 @@ export default function Home() {
       <>
         <div className="grow-1" />
         <form
-          className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit w-dvw"
+          className="flex flex-col items-center justify-center mt-8 mb-8 min-h-fit w-full"
           onSubmit={personFormik.handleSubmit}
         >
           <div className="text-3xl">Cadastro:</div>
@@ -505,9 +505,9 @@ export default function Home() {
           ) : null}
           <div className="w-4/5 flex flex-col items-stretch sm:flex-row sm:items-center gap-3 mt-4">
             <div className="sm:w-1/3">Senha:</div>
-            <div className="grow min-w-0">
+            <div className="grow min-w-0 flex flex-row">
               <Input
-                className="w-full min-w-0"
+                className="grow min-w-0"
                 id="password"
                 name="password"
                 type="password"
@@ -647,10 +647,10 @@ export default function Home() {
           ) : null}
           <div className="w-4/5 flex flex-col items-stretch sm:flex-row sm:items-center gap-3 mt-4">
             <div className="sm:w-1/3">Número de Telefone:</div>
-            <div className="grow min-w-0">
+            <div className="grow min-w-0 flex flex-row">
               <Input
                 ref={phoneRef}
-                className="w-full min-w-0"
+                className="grow min-w-0"
                 id="phoneNumber"
                 name="phoneNumber"
                 type="text"
