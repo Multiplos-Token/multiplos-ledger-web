@@ -3,7 +3,20 @@
 import { useState } from 'react'
 import { useFormik } from 'formik'
 import { useRouter } from 'next/navigation'
-import { Input, Button, Spinner } from '@fluentui/react-components'
+import {
+  Input,
+  Button,
+  Spinner,
+  Dialog,
+  DialogSurface,
+  DialogBody,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  DialogTrigger,
+  Tooltip,
+} from '@fluentui/react-components'
+import { QuestionCircle24Regular } from '@fluentui/react-icons'
 import * as Yup from 'yup'
 import { ptForm } from 'yup-locale-pt'
 
@@ -91,6 +104,48 @@ export default function Home() {
             value={loginFormik.values.password}
             disabled={wait}
           />
+          <Dialog>
+            <DialogTrigger disableButtonEnhancement>
+              <Tooltip content="O que é uma senha forte?" relationship="label">
+                <Button
+                  appearance="subtle"
+                  icon={<QuestionCircle24Regular />}
+                  aria-label="O que é uma senha forte?"
+                  disabled={wait}
+                />
+              </Tooltip>
+            </DialogTrigger>
+            <DialogSurface>
+              <DialogBody>
+                <DialogTitle>Requisitos de uma senha forte</DialogTitle>
+                <DialogContent>
+                  <p>
+                    Sua senha precisa atender a todos os seguintes requisitos:
+                  </p>
+                  <ul className="list-disc pl-5">
+                    <li>Ter no mínimo 16 caracteres.</li>
+                    <li>Conter pelo menos 1 dígito (0-9).</li>
+                    <li>
+                      Conter pelo menos 1 caractere especial (ex.: !@#$%*() ou
+                      _).
+                    </li>
+                    <li>Conter pelo menos 2 letras maiúsculas diferentes.</li>
+                    <li>Conter pelo menos 3 letras minúsculas diferentes.</li>
+                    <li>Nenhum caractere pode se repetir mais de 3 vezes.</li>
+                    <li>
+                      No máximo 3 caracteres diferentes podem se repetir
+                      (aparecer 2 ou mais vezes).
+                    </li>
+                  </ul>
+                </DialogContent>
+                <DialogActions>
+                  <DialogTrigger disableButtonEnhancement>
+                    <Button appearance="primary">Entendi</Button>
+                  </DialogTrigger>
+                </DialogActions>
+              </DialogBody>
+            </DialogSurface>
+          </Dialog>
         </div>
         {loginFormik.touched.password && loginFormik.errors.password ? (
           <div className="w-4/5 md:w-2/5 text-red-500 text-bold">
