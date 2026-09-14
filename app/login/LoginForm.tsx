@@ -76,7 +76,7 @@ export default function Home() {
             {errorMessage}
           </div>
         ) : null}
-        <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4 mb-0">
+        <div className="w-4/5 flex flex-col items-stretch sm:flex-row sm:items-center gap-3 mt-4">
           <div className="w-1/3">Nome de Usuário:</div>
           <Input
             className="grow min-w-0"
@@ -93,59 +93,64 @@ export default function Home() {
             {loginFormik.errors.name}
           </div>
         ) : null}
-        <div className="w-4/5 md:w-2/5 flex flex-row items-center gap-3 m-4">
+        <div className="w-4/5 flex flex-col items-stretch sm:flex-row sm:items-center gap-3 mt-4">
           <div className="w-1/3">Senha:</div>
-          <Input
-            className="grow min-w-0"
-            id="password"
-            name="password"
-            type="password"
-            onChange={loginFormik.handleChange}
-            value={loginFormik.values.password}
-            disabled={wait}
-          />
-          <Dialog>
-            <DialogTrigger disableButtonEnhancement>
-              <Tooltip content="O que é uma senha forte?" relationship="label">
-                <Button
-                  appearance="subtle"
-                  icon={<QuestionCircle24Regular />}
-                  aria-label="O que é uma senha forte?"
-                  disabled={wait}
-                />
-              </Tooltip>
-            </DialogTrigger>
-            <DialogSurface>
-              <DialogBody>
-                <DialogTitle>Requisitos de uma senha forte</DialogTitle>
-                <DialogContent>
-                  <p>
-                    Sua senha precisa atender a todos os seguintes requisitos:
-                  </p>
-                  <ul className="list-disc pl-5">
-                    <li>Ter no mínimo 16 caracteres.</li>
-                    <li>Conter pelo menos 1 dígito (0-9).</li>
-                    <li>
-                      Conter pelo menos 1 caractere especial (ex.: !@#$%*() ou
-                      _).
-                    </li>
-                    <li>Conter pelo menos 2 letras maiúsculas diferentes.</li>
-                    <li>Conter pelo menos 3 letras minúsculas diferentes.</li>
-                    <li>Nenhum caractere pode se repetir mais de 3 vezes.</li>
-                    <li>
-                      No máximo 3 caracteres diferentes podem se repetir
-                      (aparecer 2 ou mais vezes).
-                    </li>
-                  </ul>
-                </DialogContent>
-                <DialogActions>
-                  <DialogTrigger disableButtonEnhancement>
-                    <Button appearance="primary">Entendi</Button>
-                  </DialogTrigger>
-                </DialogActions>
-              </DialogBody>
-            </DialogSurface>
-          </Dialog>
+          <div className="grow min-w-0 flex flex-row">
+            <Input
+              className="grow min-w-0"
+              id="password"
+              name="password"
+              type="password"
+              onChange={loginFormik.handleChange}
+              value={loginFormik.values.password}
+              disabled={wait}
+            />
+            <Dialog>
+              <DialogTrigger disableButtonEnhancement>
+                <Tooltip
+                  content="O que é uma senha forte?"
+                  relationship="label"
+                >
+                  <Button
+                    appearance="subtle"
+                    icon={<QuestionCircle24Regular />}
+                    aria-label="O que é uma senha forte?"
+                    disabled={wait}
+                  />
+                </Tooltip>
+              </DialogTrigger>
+              <DialogSurface>
+                <DialogBody>
+                  <DialogTitle>Requisitos de uma senha forte</DialogTitle>
+                  <DialogContent>
+                    <p>
+                      Sua senha precisa atender a todos os seguintes requisitos:
+                    </p>
+                    <ul className="list-disc pl-5">
+                      <li>Ter no mínimo 16 caracteres.</li>
+                      <li>Conter pelo menos 1 dígito (0-9).</li>
+                      <li>
+                        Conter pelo menos 1 caractere especial (ex.: !@#$%*() ou
+                        _).
+                      </li>
+                      <li>Conter pelo menos 2 letras maiúsculas diferentes.</li>
+                      <li>Conter pelo menos 3 letras minúsculas diferentes.</li>
+                      <li>Nenhum caractere pode se repetir mais de 3 vezes.</li>
+                      <li>
+                        No máximo 3 caracteres diferentes podem se repetir
+                        (aparecer 2 ou mais vezes).
+                      </li>
+                    </ul>
+                  </DialogContent>
+                  <DialogActions>
+                    <DialogTrigger disableButtonEnhancement>
+                      <Button appearance="primary">Entendi</Button>
+                    </DialogTrigger>
+                  </DialogActions>
+                </DialogBody>
+              </DialogSurface>
+            </Dialog>
+          </div>
         </div>
         {loginFormik.touched.password && loginFormik.errors.password ? (
           <div className="w-4/5 md:w-2/5 text-red-500 text-bold">
