@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
-import IMask from 'imask'
+import IMask, { type InputMask } from 'imask'
 import { ptForm } from 'yup-locale-pt'
 import { useFormik } from 'formik'
 import {
@@ -49,7 +49,7 @@ const personValidationSchema = Yup.object({
   phoneNumber: Yup.string()
     .matches(
       /\+\d{1,3} \d{5,12}/,
-      'O formato do telefone é +0[00] 00000[00000]. Coloque o código do país e então, o número com DDD.'
+      'O formato do telefone é +0[00] 00000[0000000]. Coloque o código do país e então, o número com DDD.'
     )
     .required(),
   legalIdentification: Yup.string().required(),
@@ -58,6 +58,7 @@ const personValidationSchema = Yup.object({
 export default function Home() {
   const router = useRouter()
   const phoneRef = useRef<HTMLInputElement>(null)
+  const phoneMaskRef = useRef<InputMask | null>(null)
 
   const [wait, setWait] = useState(false)
   const [serverErrorMessage, setServerErrorMessage] = useState('')
@@ -109,11 +110,25 @@ export default function Home() {
     const phoneElement = phoneRef.current
     if (phoneElement) {
       console.log('Phoneref: ', phoneRef.current)
-      IMask(phoneElement, {
+      phoneMaskRef.current = IMask(phoneElement, {
         mask: '{+}0[00] 00000[0000000]',
       })
     }
+    return () => {
+      phoneMaskRef.current?.destroy()
+      phoneMaskRef.current = null
+    }
   }, [])
+
+  // Mantém a máscara sincronizada com mudanças externas do valor do Formik
+  // (ex.: resetForm após o cadastro). O guard evita loop/deslocamento de cursor
+  // durante a digitação (máscara e Formik já convergem para o mesmo valor).
+  useEffect(() => {
+    const mask = phoneMaskRef.current
+    if (mask && mask.value !== personFormik.values.phoneNumber) {
+      mask.value = personFormik.values.phoneNumber
+    }
+  }, [personFormik.values.phoneNumber])
 
   const countries = (
     <>
@@ -663,7 +678,7 @@ export default function Home() {
                   <DialogTitle>Formato do número de telefone</DialogTitle>
                   <DialogContent>
                     <p>O número de telefone deve seguir o formato:</p>
-                    <p className="font-bold">+0[00] 00000[00000]</p>
+                    <p className="font-bold">+0[00] 00000[0000000]</p>
                     <p>Onde:</p>
                     <ul className="list-disc pl-5">
                       <li>
@@ -684,8 +699,8 @@ export default function Home() {
                         obrigatórios do número local (DDD + início do número).
                       </li>
                       <li>
-                        <span className="font-bold">[00000]</span> — opcional:
-                        até 5 dígitos adicionais do número local (total 5 a 10
+                        <span className="font-bold">[0000000]</span> — opcional:
+                        até 7 dígitos adicionais do número local (total 5 a 12
                         dígitos).
                       </li>
                     </ul>
