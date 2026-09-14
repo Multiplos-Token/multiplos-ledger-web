@@ -1,8 +1,9 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import * as Yup from 'yup'
+import IMask from 'imask'
 import { ptForm } from 'yup-locale-pt'
 import { useFormik } from 'formik'
 import {
@@ -56,6 +57,7 @@ const personValidationSchema = Yup.object({
 
 export default function Home() {
   const router = useRouter()
+  const phoneRef = useRef<HTMLInputElement>(null)
 
   const [wait, setWait] = useState(false)
   const [serverErrorMessage, setServerErrorMessage] = useState('')
@@ -102,6 +104,16 @@ export default function Home() {
     },
     validationSchema: personValidationSchema,
   })
+
+  useEffect(() => {
+    const phoneElement = phoneRef.current
+    if (phoneElement) {
+      console.log('Phoneref: ', phoneRef.current)
+      IMask(phoneElement, {
+        mask: '{+}0[00] 00000[0000000]',
+      })
+    }
+  }, [])
 
   const countries = (
     <>
@@ -622,6 +634,7 @@ export default function Home() {
             <div className="sm:w-1/3">Número de Telefone:</div>
             <div className="grow min-w-0">
               <Input
+                ref={phoneRef}
                 className="w-full min-w-0"
                 id="phoneNumber"
                 name="phoneNumber"
