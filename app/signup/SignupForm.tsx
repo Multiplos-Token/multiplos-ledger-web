@@ -491,7 +491,10 @@ export default function Home() {
             </div>
             <Dialog>
               <DialogTrigger disableButtonEnhancement>
-                <Tooltip content="O que é uma senha forte?" relationship="label">
+                <Tooltip
+                  content="O que é uma senha forte?"
+                  relationship="label"
+                >
                   <Button
                     appearance="subtle"
                     icon={<QuestionCircle24Regular />}
@@ -628,6 +631,65 @@ export default function Home() {
                 disabled={wait}
               />
             </div>
+            <Dialog>
+              <DialogTrigger disableButtonEnhancement>
+                <Tooltip
+                  content="Formato do número de telefone"
+                  relationship="label"
+                >
+                  <Button
+                    appearance="subtle"
+                    icon={<QuestionCircle24Regular />}
+                    aria-label="Formato do número de telefone"
+                    disabled={wait}
+                  />
+                </Tooltip>
+              </DialogTrigger>
+              <DialogSurface>
+                <DialogBody>
+                  <DialogTitle>Formato do número de telefone</DialogTitle>
+                  <DialogContent>
+                    <p>O número de telefone deve seguir o formato:</p>
+                    <p className="font-bold">+0[00] 00000[00000]</p>
+                    <p>Onde:</p>
+                    <ul className="list-disc pl-5">
+                      <li>
+                        <span className="font-bold">+</span> — o sinal de mais,
+                        fixo, indica o código de chamada internacional.
+                      </li>
+                      <li>
+                        <span className="font-bold">0</span> — o primeiro dígito
+                        do código do país (DDI), obrigatório.
+                      </li>
+                      <li>
+                        <span className="font-bold">[00]</span> — opcional: até
+                        2 dígitos adicionais do código do país (total 1 a 3
+                        dígitos).
+                      </li>
+                      <li>
+                        <span className="font-bold">00000</span> — cinco dígitos
+                        obrigatórios do número local (DDD + início do número).
+                      </li>
+                      <li>
+                        <span className="font-bold">[00000]</span> — opcional:
+                        até 5 dígitos adicionais do número local (total 5 a 10
+                        dígitos).
+                      </li>
+                    </ul>
+                    <p>
+                      Entre o código do país e o resto do número de telefone
+                      deve haver um único espaço.
+                    </p>
+                    <p>Exemplo: +55 1198765432.</p>
+                  </DialogContent>
+                  <DialogActions>
+                    <DialogTrigger disableButtonEnhancement>
+                      <Button appearance="primary">Entendi</Button>
+                    </DialogTrigger>
+                  </DialogActions>
+                </DialogBody>
+              </DialogSurface>
+            </Dialog>
           </div>
           {personFormik.touched.phoneNumber &&
           personFormik.errors.phoneNumber ? (
