@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# multiplos-btoken-web-test
 
-## Getting Started
+Frontend for the Cartorario/BToken ledger platform (Next.js 16 App Router).
 
-First, run the development server:
+## Prerequisites
+
+- Yarn
+- A local env file (`.env` or `.env.local`) defining `NEXT_PUBLIC_BASE_PATH` (see `env.example`). `next.config.ts` throws at startup if it is missing or empty.
+- Optionally, `BTOKEN_API_ADDRESS` with the backend base address (defaults to `http://localhost`).
+
+## Getting started
 
 ```bash
-npm run dev
-# or
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open the dev server URL to see the app.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Other commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+yarn build   # production build (runs typecheck)
+yarn start   # serve the production build
+yarn lint    # ESLint
+```
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+For production HTTPS, `server.cjs` requires `SSL_PRIVATE_KEY`, `SSL_CERTIFICATE`, and `SRVPORT`.
